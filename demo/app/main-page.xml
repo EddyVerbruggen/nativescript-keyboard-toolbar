@@ -1,0 +1,17 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
+      xmlns:kt="nativescript-keyboard-toolbar">
+    <StackLayout>
+        <StackLayout class="p-20">
+            <Label text="Hide keyboard" tap="{{ hideKeyboard }}" class="t-20 text-center c-black" textWrap="true"/>
+            <TextView id="tv" text="bla" borderColor="#eee" borderWidth="1" height="100"/>
+        </StackLayout>
+
+        <kt:Toolbar for="tv" showWhenKeyboardHidden="true" showAtBottomWhenKeyboardHidden="true">
+            <GridLayout id="keyboardTb" rows="44" columns="*, *" backgroundColor="green">
+                <Label col="0" text="X1" class="p-5" color="yellow" horizontalAlignment="center" tap="{{ onTap }}"/>
+                <!--<TextView col="1" id="tv2" class="p-10" text="bla2"/>-->
+                <Button col="1" text="Hide" color="orange" horizontalAlignment="center" tap="{{ hideKeyboard }}"/>
+            </GridLayout>
+        </kt:Toolbar>
+    </StackLayout>
+</Page>
