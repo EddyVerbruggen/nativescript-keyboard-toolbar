@@ -3,6 +3,10 @@ import { AddChildFromBuilder } from "tns-core-modules/ui/core/view";
 import { Property } from "tns-core-modules/ui/core/properties";
 import { booleanConverter } from "tns-core-modules/ui/core/view-base";
 
+export const forProperty = new Property<ToolbarBase, string>({
+  name: "for"
+});
+
 export const showWhenKeyboardHiddenProperty = new Property<ToolbarBase, boolean>({
   name: "showWhenKeyboardHidden",
   defaultValue: false,
@@ -16,10 +20,15 @@ export const showAtBottomWhenKeyboardHiddenProperty = new Property<ToolbarBase, 
 });
 
 export abstract class ToolbarBase extends ContentView implements AddChildFromBuilder {
+  protected for: string;
   protected showWhenKeyboardHidden: boolean;
   protected showAtBottomWhenKeyboardHidden: boolean;
 
   abstract _addChildFromBuilder(name: string, value: any): void;
+
+  [forProperty.setNative](value: string) {
+    this.for = value;
+  }
 
   [showWhenKeyboardHiddenProperty.setNative](value: boolean) {
     this.showWhenKeyboardHidden = value;
@@ -30,5 +39,6 @@ export abstract class ToolbarBase extends ContentView implements AddChildFromBui
   }
 }
 
+forProperty.register(ToolbarBase);
 showWhenKeyboardHiddenProperty.register(ToolbarBase);
 showAtBottomWhenKeyboardHiddenProperty.register(ToolbarBase);

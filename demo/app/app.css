@@ -1,1 +1,11 @@
 ﻿@import '~nativescript-theme-core/css/core.light.css';
+
+TextField, TextView {
+    font-size: 13;
+    padding: 6 0;
+}
+
+TextField {
+    font-size: 13;
+    padding: 6;
+}

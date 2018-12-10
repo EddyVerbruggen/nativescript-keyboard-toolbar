@@ -1,16 +1,32 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
-      xmlns:kt="nativescript-keyboard-toolbar">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page" xmlns:kt="nativescript-keyboard-toolbar">
     <StackLayout>
         <StackLayout class="p-20">
-            <Label text="Hide keyboard" tap="{{ hideKeyboard }}" class="t-20 text-center c-black" textWrap="true"/>
-            <TextView id="tv" text="bla" borderColor="#eee" borderWidth="1" height="100"/>
+            <TextField id="tf1" text="TextField" borderColor="#eee" borderWidth="1" class="m-t-20-b-20"/>
+            <TextView id="tv1" text="TextView 1" borderColor="#eee" borderWidth="1" height="80" class="m-t-10 m-b-20"/>
+            <TextView id="tv2" text="TextView 2" borderColor="#eee" borderWidth="1" height="80"/>
         </StackLayout>
 
-        <kt:Toolbar for="tv" showWhenKeyboardHidden="true" showAtBottomWhenKeyboardHidden="true">
-            <GridLayout id="keyboardTb" rows="44" columns="*, *" backgroundColor="green">
-                <Label col="0" text="X1" class="p-5" color="yellow" horizontalAlignment="center" tap="{{ onTap }}"/>
+        <kt:Toolbar for="tf1" showWhenKeyboardHidden="true" showAtBottomWhenKeyboardHidden="true">
+            <GridLayout rows="44" columns="*, *" backgroundColor="red">
+                <Label col="0" text="tf1" class="p-5" color="yellow" horizontalAlignment="center" tap="{{ onTapTf1 }}"/>
                 <!--<TextView col="1" id="tv2" class="p-10" text="bla2"/>-->
-                <Button col="1" text="Hide" color="orange" horizontalAlignment="center" tap="{{ hideKeyboard }}"/>
+                <Button col="1" text="Hide" color="white" horizontalAlignment="center" tap="{{ hideKeyboardTf1 }}"/>
+            </GridLayout>
+        </kt:Toolbar>
+
+        <kt:Toolbar for="tv1" showWhenKeyboardHidden="false" showAtBottomWhenKeyboardHidden="false">
+            <GridLayout rows="44" columns="*, *" backgroundColor="green">
+                <Label col="0" text="tv1" class="p-5" color="yellow" horizontalAlignment="center" tap="{{ onTapTv1 }}"/>
+                <!--<TextView col="1" id="tv2" class="p-10" text="bla2"/>-->
+                <Button col="1" text="Hide" color="orange" horizontalAlignment="center" tap="{{ hideKeyboardTv1 }}"/>
+            </GridLayout>
+        </kt:Toolbar>
+
+        <kt:Toolbar for="tv2" showWhenKeyboardHidden="false" showAtBottomWhenKeyboardHidden="false">
+            <GridLayout rows="44" columns="*, *" backgroundColor="#e6e6e6">
+                <Label col="0" text="tv2" class="p-5" color="blue" horizontalAlignment="center" tap="{{ onTapTv2 }}"/>
+                <!--<TextView col="1" id="tv2" class="p-10" text="bla2"/>-->
+                <Button col="1" text="Hide" color="red" horizontalAlignment="center" tap="{{ hideKeyboardTv2 }}"/>
             </GridLayout>
         </kt:Toolbar>
     </StackLayout>
