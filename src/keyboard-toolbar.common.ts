@@ -1,6 +1,6 @@
-import { ContentView } from "tns-core-modules/ui/content-view";
-import { AddChildFromBuilder } from "tns-core-modules/ui/core/view";
+import { ContentView, View } from "tns-core-modules/ui/content-view";
 import { Property } from "tns-core-modules/ui/core/properties";
+import { AddChildFromBuilder } from "tns-core-modules/ui/core/view";
 import { booleanConverter } from "tns-core-modules/ui/core/view-base";
 
 export const forProperty = new Property<ToolbarBase, string>({
@@ -20,11 +20,27 @@ export const showAtBottomWhenKeyboardHiddenProperty = new Property<ToolbarBase, 
 });
 
 export abstract class ToolbarBase extends ContentView implements AddChildFromBuilder {
+  content: View;
   protected for: string;
   protected showWhenKeyboardHidden: boolean;
   protected showAtBottomWhenKeyboardHidden: boolean;
 
-  abstract _addChildFromBuilder(name: string, value: any): void;
+  protected abstract loaded(): void;
+  protected abstract unloaded(): void;
+
+  onLoaded(): void {
+    super.onLoaded();
+    this.loaded();
+  }
+
+  onUnloaded(): void {
+    super.onUnloaded();
+    this.unloaded();
+  }
+
+  _addChildFromBuilder(name: string, value: View): void {
+    this.content = value;
+  }
 
   [forProperty.setNative](value: string) {
     this.for = value;

@@ -5,15 +5,13 @@ import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { topmost } from "tns-core-modules/ui/frame";
 import { ToolbarBase } from "./keyboard-toolbar.common";
 
-// TODO (see loopmein) if IQKeyboardManager is available, disable it
 export class Toolbar extends ToolbarBase {
   private startPositionY: number;
   private lastHeight: number;
   private lastKeyboardHeight: number;
   private keyboardNotificationObserver: any;
 
-  onLoaded(): void {
-    super.onLoaded();
+  protected loaded(): void {
     this.keyboardNotificationObserver = application.ios.addNotificationObserver(
         UIKeyboardWillChangeFrameNotification,
         notification => {
@@ -33,13 +31,12 @@ export class Toolbar extends ToolbarBase {
         });
   }
 
-  onUnloaded(): void {
-    super.onUnloaded();
+  protected unloaded(): void {
     application.ios.removeNotificationObserver(this.keyboardNotificationObserver, UIKeyboardWillChangeFrameNotification);
   }
 
   _addChildFromBuilder(name: string, value: View): void {
-    this.content = value;
+    super._addChildFromBuilder(name, value);
     const parent = value.parent as View;
 
     setTimeout(() => {
