@@ -47,6 +47,7 @@ export class Toolbar extends ToolbarBase {
         // wrap in a timeout, to make sure this runs after 'UIKeyboardWillChangeFrameNotification'
         setTimeout(() => {
           const animateToY = this.startPositionY - this.lastKeyboardHeight - (this.showWhenKeyboardHidden === true ? 0 : (this.lastHeight / screen.mainScreen.scale));
+          // console.log(">> focus, animateToY: " + animateToY);
           parent.animate({
             translate: {x: 0, y: animateToY},
             // see http://cubic-bezier.com/#.17,.67,.69,1.04
@@ -59,14 +60,13 @@ export class Toolbar extends ToolbarBase {
 
       forView.on("blur", () => {
         const animateToY = this.showWhenKeyboardHidden === true && this.showAtBottomWhenKeyboardHidden !== true ? 0 : this.startPositionY;
+        // console.log(">> blur, animateToY: " + animateToY);
         parent.animate({
           translate: {x: 0, y: animateToY},
           curve: AnimationCurve.cubicBezier(.32, .49, .56, 1), // perhaps make this one a little different as it's the same as the 'show' animation
           duration: 370
         }).then(() => {
         });
-
-        this.lastKeyboardHeight = undefined;
       });
     }, 500);
   }

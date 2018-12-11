@@ -23,6 +23,7 @@
             </GridLayout>
         </kt:Toolbar>
 
+        <!-- TODO rename showAtBottomWhenKeyboardHidden to moveToAtBottomWhenKeyboardHidden (?) -->
         <kt:Toolbar for="tv2" showWhenKeyboardHidden="false" showAtBottomWhenKeyboardHidden="false">
             <GridLayout rows="44" columns="*, *" backgroundColor="#e6e6e6">
                 <Label col="0" text="tv2" class="p-5" color="blue" horizontalAlignment="center" tap="{{ onTapTv2 }}"/>
