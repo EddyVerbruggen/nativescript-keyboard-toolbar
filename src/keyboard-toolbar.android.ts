@@ -7,8 +7,6 @@ import { ad } from "tns-core-modules/utils/utils";
 import { ToolbarBase } from "./keyboard-toolbar.common";
 
 export class Toolbar extends ToolbarBase {
-  // if the keyboard is hidden without blurring the textfield (and vice versa) then the blur/focus events don't fire, so track focus manually
-  private hasFocus = false;
   private startPositionY: number;
   private lastHeight: number;
   private navbarHeight: number;
@@ -16,7 +14,7 @@ export class Toolbar extends ToolbarBase {
   private lastKeyboardHeight: number;
   private onGlobalLayoutListener: android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
-  protected loaded(): void {
+  protected _loaded(): void {
     setTimeout(() => this.applyInitialPosition());
 
     setTimeout(() => {
@@ -48,7 +46,7 @@ export class Toolbar extends ToolbarBase {
         const rect = new android.graphics.Rect();
         that.content.android.getWindowVisibleDisplayFrame(rect);
 
-        const newKeyboardHeight = (that.getUsableScreenSizeY() - rect.bottom) / screen.mainScreen.scale;
+        const newKeyboardHeight = (Toolbar.getUsableScreenSizeY() - rect.bottom) / screen.mainScreen.scale;
         if (newKeyboardHeight === 0 && that.lastKeyboardHeight === undefined) {
           return;
         }
@@ -73,7 +71,7 @@ export class Toolbar extends ToolbarBase {
     that.content.android.getViewTreeObserver().addOnGlobalLayoutListener(that.onGlobalLayoutListener);
   }
 
-  protected unloaded(): void {
+  protected _unloaded(): void {
     this.content.android.getViewTreeObserver().removeOnGlobalLayoutListener(this.onGlobalLayoutListener);
     this.onGlobalLayoutListener = undefined;
   }
@@ -117,8 +115,8 @@ export class Toolbar extends ToolbarBase {
     const newHeight = parent.getMeasuredHeight();
 
     // this is the bottom navbar - which may be hidden by the user.. so figure out its actual height
-    this.isNavbarVisible = page.getMeasuredHeight() < this.getUsableScreenSizeY();
-    this.navbarHeight = this.getNavbarHeight();
+    this.isNavbarVisible = page.getMeasuredHeight() < Toolbar.getUsableScreenSizeY();
+    this.navbarHeight = Toolbar.getNavbarHeight();
 
     this.startPositionY = screen.mainScreen.heightDIPs - y - ((this.showWhenKeyboardHidden === true ? newHeight : 0) / screen.mainScreen.scale) - (this.isNavbarVisible ? this.navbarHeight : 0);
 
@@ -137,7 +135,7 @@ export class Toolbar extends ToolbarBase {
     this.lastHeight = newHeight;
   }
 
-  private getNavbarHeight() {
+  private static getNavbarHeight() {
     const resources = (<android.content.Context>ad.getApplicationContext()).getResources();
     // note: there's also 'navigation_bar_height_landscape'
     const resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
@@ -147,7 +145,7 @@ export class Toolbar extends ToolbarBase {
     return 0;
   }
 
-  private getUsableScreenSizeY(): number {
+  private static getUsableScreenSizeY(): number {
     const screenSize = new android.graphics.Point();
     AndroidApp.foregroundActivity.getWindowManager().getDefaultDisplay().getSize(screenSize);
     return screenSize.y;

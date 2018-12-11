@@ -21,21 +21,37 @@ export const showAtBottomWhenKeyboardHiddenProperty = new Property<ToolbarBase, 
 
 export abstract class ToolbarBase extends ContentView implements AddChildFromBuilder {
   content: View;
+
+  // if the keyboard is hidden without blurring the textfield (and vice versa) then the blur/focus events don't fire, so track focus manually
+  protected hasFocus = false;
+
   protected for: string;
+
   protected showWhenKeyboardHidden: boolean;
+
+  // TODO rename showAtBottomWhenKeyboardHidden to moveToAtBottomWhenKeyboardHidden (?)
   protected showAtBottomWhenKeyboardHidden: boolean;
 
-  protected abstract loaded(): void;
-  protected abstract unloaded(): void;
+  protected abstract _loaded(): void;
+
+  protected abstract _unloaded(): void;
+
+  protected _layout(left: number, top: number, right: number, bottom: number): void {
+  }
 
   onLoaded(): void {
     super.onLoaded();
-    this.loaded();
+    this._loaded();
   }
 
   onUnloaded(): void {
     super.onUnloaded();
-    this.unloaded();
+    this._unloaded();
+  }
+
+  public onLayout(left: number, top: number, right: number, bottom: number): void {
+    super.onLayout(left, top, right, bottom);
+    this._layout(left, top, right, bottom);
   }
 
   _addChildFromBuilder(name: string, value: View): void {

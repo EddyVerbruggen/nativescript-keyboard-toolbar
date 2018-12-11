@@ -1,35 +1,76 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
-      xmlns:kt="nativescript-keyboard-toolbar">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page" xmlns:kt="nativescript-keyboard-toolbar">
     <StackLayout>
+
         <StackLayout class="p-20">
-            <TextField id="tf1" text="TextField" borderColor="#eee" borderWidth="1" class="m-t-20-b-20"/>
-            <TextView id="tv1" text="TextView 1" borderColor="#eee" borderWidth="1" height="80" class="m-t-10 m-b-20"/>
-            <TextView id="tv2" text="TextView 2" borderColor="#eee" borderWidth="1" height="80"/>
+            <!--<Button id="btn1" text="Button" class="m-t-20-b-20"/>-->
+            <TextField id="tf1" hint="0.00" keyboardType="number" borderColor="#eee" borderWidth="1" class="m-t-20"/>
+            <TextField id="tf2" text="{{ getSliderValue() }}" hint="0 - 100" keyboardType="number" borderColor="#eee" borderWidth="1" class="m-t-20"/>
+            <TextView id="tv1" text="" hint="Tell us about yourself.." borderColor="#eee" borderWidth="1" height="70" class="m-t-20" android:paddingLeft="6"/>
+            <TextView id="tv2" text="Say it with emoji!" borderColor="#eee" borderWidth="1" height="70" class="m-t-20"/>
+            <TextView id="tv3" hint="Don't @ me! " keyboardType="email" borderColor="#eee" borderWidth="1" height="70" class="m-t-20"/>
         </StackLayout>
 
-        <!-- make sure you place these 'kt:Toolbar' thingies below any other UI tags -->
+        <!--kt:Toolbar for="btn1">
+            <GridLayout rows="120" columns="*, *" backgroundColor="#c9c9c9">
+                <Label col="0" text="Left" verticalAlignment="center" horizontalAlignment="center" tap="{{ onTapTf1 }}"/>
+                <Button col="2" text="Right" color="white" verticalAlignment="center" horizontalAlignment="center"/>
+            </GridLayout>
+        </kt:Toolbar-->
 
+        <!-- make sure you place these 'kt:Toolbar' thingies below any other UI tags -->
         <kt:Toolbar for="tf1" showWhenKeyboardHidden="false" showAtBottomWhenKeyboardHidden="false">
-            <GridLayout rows="44" columns="*, *" backgroundColor="red">
-                <Label col="0" text="tf1" class="p-5" color="yellow" horizontalAlignment="center" tap="{{ onTapTf1 }}"/>
-                <Button col="1" text="Hide" color="white" horizontalAlignment="center" tap="{{ hideKeyboardTf1 }}"/>
+            <ScrollView orientation="horizontal">
+                <StackLayout orientation="horizontal" height="44" class="toolbar">
+                    <Label text="Quick pick:" color="#444444" verticalAlignment="center" horizontalAlignment="center"/>
+                    <Label text="5.00" verticalAlignment="center" horizontalAlignment="center" tap="{{ setAmountInTextField }}"/>
+                    <Label text="10.00" verticalAlignment="center" horizontalAlignment="center" tap="{{ setAmountInTextField }}"/>
+                    <Label text="50.00" verticalAlignment="center" horizontalAlignment="center" tap="{{ setAmountInTextField }}"/>
+                    <Label text="100.00" verticalAlignment="center" horizontalAlignment="center" tap="{{ setAmountInTextField }}"/>
+                    <Label text="200.00" verticalAlignment="center" horizontalAlignment="center" tap="{{ setAmountInTextField }}"/>
+                    <Label text="500.00" verticalAlignment="center" horizontalAlignment="center" tap="{{ setAmountInTextField }}"/>
+                    <Label text="1000.00" verticalAlignment="center" horizontalAlignment="center" tap="{{ setAmountInTextField }}"/>
+                </StackLayout>
+            </ScrollView>
+        </kt:Toolbar>
+
+        <kt:Toolbar for="tf2">
+            <GridLayout rows="12, 44" columns="auto, *, auto" class="toolbar">
+                <Label rowSpan="2" col="0" text="0" class="p-5" verticalAlignment="center" horizontalAlignment="center"/>
+                <Label row="0" col="1" text="{{ getSliderValue() }}" class="slider-label slider-label-{{ getSliderValue() < 0 || getSliderValue() > 100 ? 'in' : '' }}valid" verticalAlignment="center" horizontalAlignment="center"/>
+                <Slider row="1" col="1" value="{{ sliderValue }}" minValue="0" maxValue="100" class="p-5" verticalAlignment="center" horizontalAlignment="center"/>
+                <Label rowSpan="2" col="2" text="100" class="p-5" verticalAlignment="center" horizontalAlignment="center"/>
             </GridLayout>
         </kt:Toolbar>
 
         <kt:Toolbar for="tv1" showWhenKeyboardHidden="false" showAtBottomWhenKeyboardHidden="false">
-            <GridLayout rows="44" columns="*, *" backgroundColor="green">
-                <Label col="0" text="tv1" class="p-5" color="yellow" horizontalAlignment="center" tap="{{ onTapTv1 }}"/>
-                <Button col="1" text="Hide" color="orange" horizontalAlignment="center" tap="{{ hideKeyboardTv1 }}"/>
+            <GridLayout rows="44" columns="auto, auto, *" class="toolbar">
+                <Label col="0" text="{{ iconTrash }}" class="icon icon-trash m-l-10" verticalAlignment="center" horizontalAlignment="center" tap="{{ onTapTv1Trash }}"/>
+                <Label col="1" text="{{ iconCamera }}" class="icon" verticalAlignment="center" horizontalAlignment="center" tap="{{ onTapTv1Camera }}"/>
+                <Button col="2" text="Close" verticalAlignment="center" horizontalAlignment="right" class="m-r-10" tap="{{ hideKeyboardTv1 }}"/>
             </GridLayout>
         </kt:Toolbar>
 
-        <!-- TODO rename showAtBottomWhenKeyboardHidden to moveToAtBottomWhenKeyboardHidden (?) -->
         <kt:Toolbar for="tv2" showWhenKeyboardHidden="false" showAtBottomWhenKeyboardHidden="false">
-            <GridLayout rows="44" columns="*, *" backgroundColor="#e6e6e6">
-                <Label col="0" text="tv2" class="p-5" color="blue" horizontalAlignment="center" tap="{{ onTapTv2 }}"/>
-                <!--<TextView col="1" id="tv2" class="p-10" text="bla2"/>-->
-                <Button col="1" text="Hide" color="red" horizontalAlignment="center" tap="{{ hideKeyboardTv2 }}"/>
+            <GridLayout rows="44" columns="*, *, *, *, *, *" class="toolbar">
+                <Label col="0" text="👍" verticalAlignment="center" horizontalAlignment="center" tap="{{ appendToTextView2 }}"/>
+                <Label col="1" text="👎" verticalAlignment="center" horizontalAlignment="center" tap="{{ appendToTextView2 }}"/>
+                <Label col="2" text="😄" verticalAlignment="center" horizontalAlignment="center" tap="{{ appendToTextView2 }}"/>
+                <Label col="3" text="🎉" verticalAlignment="center" horizontalAlignment="center" tap="{{ appendToTextView2 }}"/>
+                <Label col="4" text="😕" verticalAlignment="center" horizontalAlignment="center" tap="{{ appendToTextView2 }}"/>
+                <Label col="5" text="❤️" verticalAlignment="center" horizontalAlignment="center" tap="{{ appendToTextView2 }}"/>
             </GridLayout>
         </kt:Toolbar>
+
+        <kt:Toolbar for="tv3">
+            <ScrollView orientation="horizontal">
+                <StackLayout orientation="horizontal" height="44" class="toolbar toolbar-twitter">
+                    <Label text="Type an @ to search for a Twitter handle" visibility="{{ showEddy || showRob || showTrumpsTies ? 'collapse' : 'visible' }}" verticalAlignment="center" horizontalAlignment="center" tap="{{ appendToTextView3 }}"/>
+                    <Label text="@eddyverbruggen" visibility="{{ showEddy ? 'visible' : 'collapse' }}" verticalAlignment="center" horizontalAlignment="center" tap="{{ appendToTextView3 }}"/>
+                    <Label text="@roblauer" visibility="{{ showRob ? 'visible' : 'collapse' }}" verticalAlignment="center" horizontalAlignment="center" tap="{{ appendToTextView3 }}"/>
+                    <Label text="@trumpsties" visibility="{{ showTrumpsTies ? 'visible' : 'collapse' }}" verticalAlignment="center" horizontalAlignment="center" tap="{{ appendToTextView3 }}"/>
+                </StackLayout>
+            </ScrollView>
+        </kt:Toolbar>
+
     </StackLayout>
 </Page>

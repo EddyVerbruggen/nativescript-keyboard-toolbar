@@ -9,3 +9,43 @@ TextField {
     font-size: 13;
     padding: 6;
 }
+
+.toolbar {
+    background-color: #f6f6f6;
+    border-color: #c6c6c6;
+    border-top-width: 1px;
+}
+
+.toolbar.toolbar-twitter {
+    background-color: #eaf4fa;
+    border-color: #cbe3f5;
+}
+
+.toolbar Label {
+    color: #777;
+    padding: 5 13;
+}
+
+.toolbar.toolbar-twitter Label {
+    color: #4594da;
+}
+
+.toolbar Button {
+}
+
+.toolbar Label.slider-label {
+    padding-top: 6;
+    padding-bottom: 3;
+    font-size: 11;
+}
+
+Label.icon {
+    font-family: 'Linearicons-Free';
+    font-size: 24;
+    padding: 0 10;
+}
+
+Label.icon-trash {
+    font-size: 20;
+    color: red;
+}
