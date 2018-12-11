@@ -7,6 +7,8 @@
             <TextView id="tv2" text="TextView 2" borderColor="#eee" borderWidth="1" height="80"/>
         </StackLayout>
 
+        <!-- make sure you place these 'kt:Toolbar' thingies below any other UI tags -->
+
         <kt:Toolbar for="tf1" showWhenKeyboardHidden="false" showAtBottomWhenKeyboardHidden="false">
             <GridLayout rows="44" columns="*, *" backgroundColor="red">
                 <Label col="0" text="tf1" class="p-5" color="yellow" horizontalAlignment="center" tap="{{ onTapTf1 }}"/>
