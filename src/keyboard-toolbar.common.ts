@@ -2,6 +2,7 @@ import { ContentView, View } from "tns-core-modules/ui/content-view";
 import { Property } from "tns-core-modules/ui/core/properties";
 import { AddChildFromBuilder } from "tns-core-modules/ui/core/view";
 import { booleanConverter } from "tns-core-modules/ui/core/view-base";
+import { VerticalAlignment } from "tns-core-modules/ui/styling/style-properties";
 
 export const forProperty = new Property<ToolbarBase, string>({
   name: "for"
@@ -21,6 +22,9 @@ export const showAtBottomWhenKeyboardHiddenProperty = new Property<ToolbarBase, 
 
 export abstract class ToolbarBase extends ContentView implements AddChildFromBuilder {
   content: View;
+  verticalAlignment: VerticalAlignment;
+
+  private static DEBUG = false;
 
   // if the keyboard is hidden without blurring the textfield (and vice versa) then the blur/focus events don't fire, so track focus manually
   protected hasFocus = false;
@@ -39,8 +43,20 @@ export abstract class ToolbarBase extends ContentView implements AddChildFromBui
   protected _layout(left: number, top: number, right: number, bottom: number): void {
   }
 
+  protected log(what: string): void {
+    if (ToolbarBase.DEBUG) {
+      console.log("⌨︎ " + what);
+    }
+  }
+
   onLoaded(): void {
     super.onLoaded();
+    // TODO figure out how to determine and apply the parent's height automatically based on the child's height
+    if (isNaN(+this.height)) {
+      console.log(`\n⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ `);
+      console.log(`⌨  Please specify height="<nr of px>" or the toolbar won't render correctly! Example: <Toolbar for="${this.for}" height="44">`);
+      console.log(`⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨\n\n`);
+    }
     this._loaded();
   }
 

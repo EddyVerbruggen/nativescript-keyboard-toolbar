@@ -9,6 +9,7 @@
     }
   },
   "dependencies": {
+    "email-validator": "^2.0.4",
     "nativescript-keyboard-toolbar": "file:../src",
     "nativescript-theme-core": "^1.0.4",
     "nativescript-unit-test-runner": "^0.3.4",

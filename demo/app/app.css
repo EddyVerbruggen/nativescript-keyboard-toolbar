@@ -10,6 +10,12 @@ TextField {
     padding: 6;
 }
 
+Label.scroll-text {
+    font-size: 13;
+    color: #777;
+    margin: 12 0;
+}
+
 .toolbar {
     background-color: #f6f6f6;
     border-color: #c6c6c6;
@@ -33,13 +39,40 @@ TextField {
 .toolbar Button {
 }
 
-.toolbar Label.slider-label {
-    padding-top: 6;
-    padding-bottom: 3;
-    font-size: 11;
+.toolbar Label.email-valid {
+    color: green;
 }
 
-Label.icon {
+.toolbar Label.email-invalid {
+    color: red;
+}
+
+.toolbar Label.price-picker {
+    color: #327bf6;
+    font-size: 13;
+    border-radius: 50%;
+    border-width: 1;
+    border-color: #c9c9c9;
+    padding: 4 6;
+    margin: 0 6;
+}
+
+.toolbar Slider {
+    margin-bottom: 10;
+}
+
+.toolbar Label.slider-label {
+    font-size: 11;
+    font-weight: bold;
+    color: #327bf6;
+}
+
+.toolbar Label.slider-min-max {
+    font-size: 13;
+    padding-bottom: 10;
+}
+
+.icon {
     font-family: 'Linearicons-Free';
     font-size: 24;
     padding: 0 10;

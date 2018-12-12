@@ -13,6 +13,12 @@ export class Toolbar extends ToolbarBase {
   private isNavbarVisible: boolean;
   private lastKeyboardHeight: number;
   private onGlobalLayoutListener: android.view.ViewTreeObserver.OnGlobalLayoutListener;
+  // private onScrollChangedListener: android.view.ViewTreeObserver.OnScrollChangedListener;
+
+  constructor() {
+    super();
+    this.verticalAlignment = "top"; // weird but true
+  }
 
   protected _loaded(): void {
     setTimeout(() => this.applyInitialPosition());
@@ -36,6 +42,15 @@ export class Toolbar extends ToolbarBase {
     }, 500);
 
     const that = this;
+
+    /*
+    this.onScrollChangedListener = new android.view.ViewTreeObserver.OnScrollChangedListener({
+      onScrollChanged(): void {
+        console.log(">> scroll changed");
+      }
+    });
+    */
+
     this.onGlobalLayoutListener = new android.view.ViewTreeObserver.OnGlobalLayoutListener({
       onGlobalLayout(): void {
         // this can happen during livesync - no problemo
@@ -69,11 +84,14 @@ export class Toolbar extends ToolbarBase {
     });
 
     that.content.android.getViewTreeObserver().addOnGlobalLayoutListener(that.onGlobalLayoutListener);
+    // that.content.android.getViewTreeObserver().addOnScrollChangedListener(that.onScrollChangedListener);
   }
 
   protected _unloaded(): void {
     this.content.android.getViewTreeObserver().removeOnGlobalLayoutListener(this.onGlobalLayoutListener);
+    // this.content.android.getViewTreeObserver().removeOnScrollChangedListener(this.onScrollChangedListener);
     this.onGlobalLayoutListener = undefined;
+    // this.onScrollChangedListener = undefined;
   }
 
   private showToolbar(parent): void {

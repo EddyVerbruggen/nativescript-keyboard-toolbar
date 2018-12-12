@@ -53,7 +53,7 @@ export class Toolbar extends ToolbarBase {
           // wrap in a timeout, to make sure this runs after 'UIKeyboardWillChangeFrameNotification'
           setTimeout(() => {
             const animateToY = this.startPositionY - this.lastKeyboardHeight - (this.showWhenKeyboardHidden === true ? 0 : (this.lastHeight / screen.mainScreen.scale));
-            // console.log(">> focus, animateToY: " + animateToY);
+            this.log("focus, animateToY: " + animateToY);
             parent.animate({
               translate: {x: 0, y: animateToY},
               // see http://cubic-bezier.com/#.17,.67,.69,1.04
@@ -67,7 +67,7 @@ export class Toolbar extends ToolbarBase {
         forView.on("blur", () => {
           this.hasFocus = false;
           const animateToY = this.showWhenKeyboardHidden === true && this.showAtBottomWhenKeyboardHidden !== true ? 0 : this.startPositionY;
-          // console.log(">> blur, animateToY: " + animateToY);
+          this.log("blur, animateToY: " + animateToY);
           parent.animate({
             translate: {x: 0, y: animateToY},
             curve: AnimationCurve.cubicBezier(.32, .49, .56, 1), // perhaps make this one a little different as it's the same as the 'show' animation
@@ -80,7 +80,7 @@ export class Toolbar extends ToolbarBase {
         // it's not a text widget, so just animate the toolbar
         forView.on("tap", () => {
           const animateToY = this.startPositionY - (this.lastHeight / screen.mainScreen.scale);
-          // console.log(">> tap, animateToY: " + animateToY);
+          this.log("tap, animateToY: " + animateToY);
           parent.animate({
             translate: {x: 0, y: animateToY},
             // see http://cubic-bezier.com/#.17,.67,.69,1.04
@@ -103,6 +103,8 @@ export class Toolbar extends ToolbarBase {
 
     const {y} = parent.getLocationOnScreen();
     this.startPositionY = screen.mainScreen.heightDIPs - y - ((this.showWhenKeyboardHidden === true ? newHeight : 0) / screen.mainScreen.scale);
+    this.log("_layout, startPositionY: " + this.startPositionY);
+
     if (this.lastHeight === undefined) {
       // this moves the keyboardview to the bottom (just move it offscreen/toggle visibility(?) if the user doesn't want to show it without the keyboard being up)
       if (this.showWhenKeyboardHidden === true) {
