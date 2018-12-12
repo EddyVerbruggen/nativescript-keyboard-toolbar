@@ -96,9 +96,13 @@ export class Toolbar extends ToolbarBase {
 
   protected _layout(left: number, top: number, right: number, bottom: number): void {
     const parent = <View>this.content.parent;
-    const {y} = parent.getLocationOnScreen();
     const newHeight = parent.getMeasuredHeight();
-    this.startPositionY = screen.mainScreen.heightDIPs - y - ((this.showWhenKeyboardHidden === true ? parent.getMeasuredHeight() : 0) / screen.mainScreen.scale);
+    if (newHeight === this.lastHeight) {
+      return;
+    }
+
+    const {y} = parent.getLocationOnScreen();
+    this.startPositionY = screen.mainScreen.heightDIPs - y - ((this.showWhenKeyboardHidden === true ? newHeight : 0) / screen.mainScreen.scale);
     if (this.lastHeight === undefined) {
       // this moves the keyboardview to the bottom (just move it offscreen/toggle visibility(?) if the user doesn't want to show it without the keyboard being up)
       if (this.showWhenKeyboardHidden === true) {

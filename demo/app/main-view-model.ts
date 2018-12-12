@@ -21,6 +21,9 @@ export class HelloWorldModel extends Observable {
     setTimeout(() => {
       const page = topmost().currentPage;
       const textView = <TextView>page.getViewById("tv3");
+      if (!textView) {
+        return;
+      }
       textView.on("textChange", (args: any) => {
         const text = textView.text;
         const words = text.split(" ");
