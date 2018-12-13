@@ -19,9 +19,11 @@ _iOS and Android running the included [demo](/demo) - much better framerate [on 
 ## What The Keyboard!?
 Glad you asked 😅! Here's a few highlights:
 
-[x] ⌨️ Mobile keyboards are a compromise, let's make them easier to work with.
-[x] 🥅 Design goal = declare any NativeScript layout and stick it on top of the soft keyboard.
-[x] 🙅‍♀️ No dependencies - only stuff in `tns-core-modules` your app already has.
+- ⌨️ Mobile keyboards are a compromise, let's make them easier to work with by attaching a toolbar on top of it.
+- 🥅 Design goal = declare any NativeScript layout and stick it on top of the soft keyboard.
+- 🙅‍♀️ No third party dependencies - only stuff in `tns-core-modules` your app already has.
+- ♾ Allow multiple toolbar designs on one page.
+- 🏒 Make the toolbar _stick_ to the keyboard, no matter its shape or form.
 
 ## Installation
 ```bash
@@ -30,9 +32,29 @@ tns plugin add nativescript-keyboard-toolbar
 
 ## Usage with NativeScript Core
 
-### API
-
 ```xml
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page" xmlns:kt="nativescript-keyboard-toolbar">
+
+    <!-- This GridLayout wrapper is required; it wraps the visible layout and the Toolbar layout(s) -->
+    <GridLayout rows="*" columns="*">
+
+        <StackLayout>
+            <Label text="Some text"/>
+            <!-- Add an 'id' property that we can reference below -->
+            <TextField id="priceTextField" hint="Enter the price" keyboardType="number"/>
+        </StackLayout>
+
+        <!-- The 'forId' and 'height' properties are mandatory! -->
+        <kt:Toolbar forId="priceTextField" height="44">
+            <GridLayout columns="*, *, *, *, *, *" class="toolbar">
+                <Label col="0" text="👍" tap="{{ appendToTextView }}"/>
+                <Label col="1" text="👎" tap="{{ appendToTextView }}"/>
+                <Label col="2" text="😄" tap="{{ appendToTextView }}"/>
+            </GridLayout>
+        </kt:Toolbar>
+
+    </GridLayout>
+</Page>
 ```
 
 ### Demo app
