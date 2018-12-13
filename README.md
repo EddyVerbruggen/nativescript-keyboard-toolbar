@@ -43,21 +43,22 @@ when their `row` and `col` properties are equal (or omitted).
 So if your layout structure is currently this:
 
 ```xml
-<ActionBar></ActionBar>
+<ActionBar/>
 <StackLayout/>
 ``` 
 
 Change it to this:
 
 ```xml
-<ActionBar></ActionBar>
+<ActionBar/>
 <GridLayout>
     <StackLayout/>
     <Toolbar/>
 </GridLayout>
 ```
+Not too bad, right? That will make the `Toolbar` stack on top of the `StackLayout` you already had.
 
-That will make the `Toolbar` stack on top of the `StackLayout` you already had.
+> Note that the plugin could have done this for you, or take some other approach entirely, but many hours of tinkering has convinced me this is the best solution.
 
 ## Usage with NativeScript Core
 Mind the comments in the example below.
