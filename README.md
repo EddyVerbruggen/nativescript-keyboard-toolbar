@@ -17,26 +17,56 @@
 _iOS and Android running the included [demo](/demo) - much better framerate [on YouTube](https://www.youtube.com/watch?v=JJOOXrcopSA)!_
 
 ## What The Keyboard!?
-Glad you asked 😅! Here's a few highlights:
+Glad you asked 😅!
 
-- ⌨️ Mobile keyboards are a compromise, let's make them easier to work with by attaching a toolbar on top of it.
+- ⌨️ Mobile keyboards are a compromise at best. Let's make them easier to work with by attaching a toolbar on top of it.
 - 🥅 Design goal = declare any NativeScript layout and stick it on top of the soft keyboard.
-- 🙅‍♀️ No third party dependencies - only stuff in `tns-core-modules` your app already has.
-- ♾ Allow multiple toolbar designs on one page.
 - 🏒 Make the toolbar _stick_ to the keyboard, no matter its shape or form.
+- 🙅‍♀️ No third party dependencies; use only stuff from `tns-core-modules` (which your app already has).
+- ♾ Allow multiple toolbar designs on one page.
 
 ## Installation
 ```bash
 tns plugin add nativescript-keyboard-toolbar
 ```
 
-## Usage with NativeScript Core
+## General usage instructions
+The plugin works by grabbing your declared toolbar layout and moving it off-screen.
+
+Then, whenever the related `TextField` or `TextView` received focus,
+the plugin animates the toolbar to the top of the keyboard and keeps it there until the field loses focus.
+
+For this to behave properly you'll need to grab any layout you currently have and wrap it in a `GridLayout`
+as show in the examples below. The `GridLayout` allows for stacking multiple child layout on top of each other
+when their `row` and `col` properties are equal (or omitted).
+
+So if your layout structure is currently this:
 
 ```xml
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page" xmlns:kt="nativescript-keyboard-toolbar">
+<ActionBar></ActionBar>
+<StackLayout/>
+``` 
+
+Change it to this:
+
+```xml
+<ActionBar></ActionBar>
+<GridLayout>
+    <StackLayout/>
+    <Toolbar/>
+</GridLayout>
+```
+
+That will make the `Toolbar` stack on top of the `StackLayout` you already had.
+
+## Usage with NativeScript Core
+Mind the comments in the example below.
+
+```xml
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:kt="nativescript-keyboard-toolbar">
 
     <!-- This GridLayout wrapper is required; it wraps the visible layout and the Toolbar layout(s) -->
-    <GridLayout rows="*" columns="*">
+    <GridLayout>
 
         <StackLayout>
             <Label text="Some text"/>
@@ -44,9 +74,9 @@ tns plugin add nativescript-keyboard-toolbar
             <TextField id="priceTextField" hint="Enter the price" keyboardType="number"/>
         </StackLayout>
 
-        <!-- The 'forId' and 'height' properties are mandatory! -->
+        <!-- The 'forId' and 'height' properties are mandatory -->
         <kt:Toolbar forId="priceTextField" height="44">
-            <GridLayout columns="*, *, *, *, *, *" class="toolbar">
+            <GridLayout columns="*, *, *" class="toolbar">
                 <Label col="0" text="👍" tap="{{ appendToTextView }}"/>
                 <Label col="1" text="👎" tap="{{ appendToTextView }}"/>
                 <Label col="2" text="😄" tap="{{ appendToTextView }}"/>
@@ -57,7 +87,7 @@ tns plugin add nativescript-keyboard-toolbar
 </Page>
 ```
 
-### Demo app
+### Core demo app
 Check the source in the [demo](/demo) folder, or run it on your own device:
 
 ```bash
@@ -68,13 +98,44 @@ npm run demo.ios # or .android
 ```
 
 ## Usage with NativeScript-Angular
+Register the plugin in a specific module, or globally in the app module: 
 
-### API
-
-```html
+```typescript
+import { registerElement } from "nativescript-angular";
+registerElement("KeyboardToolbar", () => require("nativescript-keyboard-toolbar").Toolbar);
 ```
 
-### Demo app
+In this example, we're adding a `TextField` to the `ActionBar`. Note that we still need to wrap the rest of the page in a `GridLayout`:
+
+```html
+<ActionBar>
+  <TextField #textField1 id="tf1"></TextField>
+</ActionBar>
+
+<!-- Our Toolbar wrapper - no need for 'columns' / 'rows' properties because we want the children to stack -->
+<GridLayout>
+
+  <!-- Add whatever visible layout you need here -->
+  <ListView [items]="items">
+    <ng-template let-item="item">
+      <Label [nsRouterLink]="['/item', item.id]" [text]="item.name" class="list-group-item"></Label>
+    </ng-template>
+  </ListView>
+
+  <!-- Use 'KeyboardToolbar' because that's what we registered in our module (see above).
+   The 'forId' and 'height' properties are mandatory -->
+  <KeyboardToolbar forId="tf1" height="44">
+    <GridLayout columns="*, *, *, auto" class="toolbar">
+      <Label col="0" text="👍" (tap)="appendToTextField(textField1, '👍')"></Label>
+      <Label col="1" text="👎" (tap)="appendToTextField(textField1, '👎')"></Label>
+      <Label col="2" text="😄" (tap)="appendToTextField(textField1, '😄')"></Label>
+      <Label col="3" text="Close️" (tap)="closeKeyboard(textField1)"></Label>
+    </GridLayout>
+  </KeyboardToolbar>
+</GridLayout>
+```
+
+### Angular demo app
 Check the source in the [demo-ng](/demo-ng) folder, or run it on your own device:
 
 ```bash
@@ -85,13 +146,56 @@ npm run demo-ng.ios # or .android
 ```
 
 ## Usage with NativeScript-Vue
+Register the plugin in `app.js` (or depending on your app's setup: `app.ts`, or `main.js`, etc): 
 
-### API
-
-```html
+```typescript
+import Vue from "nativescript-vue";
+Vue.registerElement('KeyboardToolbar', () => require('nativescript-keyboard-toolbar').Toolbar);
 ```
 
-### Demo app
+```vue
+<template>
+  <Page class="page">
+    <ActionBar class="action-bar">
+      <Label class="action-bar-title" text="Home"></Label>
+    </ActionBar>
+
+    <!-- Our Toolbar wrapper - no need for 'columns' / 'rows' properties because we want the children to stack -->
+    <GridLayout>
+
+      <StackLayout>
+        <TextView id="tv2" text="Say it with emoji!"/>
+      </StackLayout>
+
+      <!-- Use 'KeyboardToolbar' because that's what we registered in our module (see above).
+         The 'forId' and 'height' properties are mandatory -->
+      <KeyboardToolbar forId="tv2" height="44">
+        <GridLayout columns="*, *, *" class="toolbar">
+          <Label col="0" text="👍" @tap="appendToTextView2"/>
+          <Label col="1" text="👎" @tap="appendToTextView2"/>
+          <Label col="2" text="😄" @tap="appendToTextView2"/>
+        </GridLayout>
+      </KeyboardToolbar>
+
+    </GridLayout>
+  </Page>
+</template>
+
+<script>
+  import { topmost } from "tns-core-modules/ui/frame";
+
+  export default {
+    methods: {
+      appendToTextView2(args) {
+        const textView = topmost().currentPage.getViewById("tv2");
+        textView.text += args.object.text;
+      }
+    }
+  }
+</script>
+```
+
+### Vue demo app
 Check the source in the [demo-vue](/demo-vue) folder, or run it on your own device:
 
 ```bash

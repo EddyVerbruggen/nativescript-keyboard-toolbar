@@ -4,29 +4,11 @@
       <Label class="action-bar-title" text="Home"></Label>
     </ActionBar>
 
-    <GridLayout rows="*" columns="*">
-      <!--<Label class="info" horizontalAlignment="center" verticalAlignment="center">-->
-      <!--<FormattedString>-->
-      <!--<Span class="fa" text.decode="&#xf135; "/>-->
-      <!--<Span :text="message"/>-->
-      <!--</FormattedString>-->
-      <!--</Label>-->
+    <GridLayout>
+
       <StackLayout>
-        <TextView id="tv1" text="" hint="Tell us about yourself.." borderColor="#eee" borderWidth="1" height="60" class="m-t-15" android:paddingLeft="6"/>
         <TextView id="tv2" text="Say it with emoji!" borderColor="#eee" borderWidth="1" height="60" class="m-t-15" android:paddingLeft="6"/>
       </StackLayout>
-
-      <KeyboardToolbar forId="tv1" height="44">
-        <GridLayout columns="auto, auto, auto, auto, auto, auto, *, auto" class="toolbar">
-          <!--<Label col="0" text="{{ iconDown }}" class="icon m-l-10" verticalAlignment="center" horizontalAlignment="center" tap="{{ goToTv2 }}"/>-->
-          <!--<Label col="1" text="{{ iconPaperclip }}" class="icon" verticalAlignment="center" horizontalAlignment="center" tap="{{ onTapTv1Camera }}"/>-->
-          <!--<Label col="2" text="{{ iconCamera }}" class="icon" verticalAlignment="center" horizontalAlignment="center" tap="{{ onTapTv1Camera }}"/>-->
-          <!--<Label col="3" text="{{ iconExpand }}" class="icon" verticalAlignment="center" horizontalAlignment="center" tap="{{ onTapTv1Expand }}"/>-->
-          <!--<Label col="4" text="{{ iconContract }}" class="icon" verticalAlignment="center" horizontalAlignment="center" tap="{{ onTapTv1Contract }}"/>-->
-          <!--<Label col="5" text="{{ iconTrash }}" class="icon icon-trash" verticalAlignment="center" horizontalAlignment="center" tap="{{ onTapTv1Trash }}"/>-->
-          <Button col="6" text="Close" verticalAlignment="center" horizontalAlignment="right" class="m-r-10" tap="{{ hideKeyboardTv1 }}"/>
-        </GridLayout>
-      </KeyboardToolbar>
 
       <KeyboardToolbar forId="tv2" height="44">
         <GridLayout columns="*, *, *, *, *, *" class="toolbar">

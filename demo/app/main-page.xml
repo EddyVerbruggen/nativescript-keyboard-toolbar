@@ -1,7 +1,7 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page" xmlns:kt="nativescript-keyboard-toolbar">
 
     <!-- This GridLayout wrapper is required; it wraps your layout and the Toolbar layouts-->
-    <GridLayout rows="*" columns="*">
+    <GridLayout>
         <ScrollView>
             <StackLayout class="p-x-20">
                 <TextField id="tf1" hint="Enter the price" keyboardType="number" borderColor="#eee" borderWidth="1" class="m-t-15"/>
