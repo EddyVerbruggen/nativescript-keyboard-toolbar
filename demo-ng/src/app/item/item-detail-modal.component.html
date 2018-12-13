@@ -1,0 +1,18 @@
+<GridLayout rows="*" columns="*" class="page">
+  <StackLayout>
+    <TextField id="tf2" #textField2 class="h2 mt-20" [text]="item.name" horizontalAlignment="center" borderColor="#eee" borderWidth="1" borderRadius="5"></TextField>
+    <Button text="close modal" (tap)="close()" class="m-t-30"></Button>
+  </StackLayout>
+
+  <KeyboardToolbar forId="tf2" height="44">
+    <GridLayout columns="*, *, *, *, *, *, auto" class="toolbar">
+      <Label col="0" text="👍" (tap)="appendToTextField(textField2, '👍')"></Label>
+      <Label col="1" text="👎" (tap)="appendToTextField(textField2, '👎')"></Label>
+      <Label col="2" text="😄" (tap)="appendToTextField(textField2, '😄')"></Label>
+      <Label col="3" text="🎉" (tap)="appendToTextField(textField2, '🎉')"></Label>
+      <Label col="4" text="😕" (tap)="appendToTextField(textField2, '😕')"></Label>
+      <Label col="5" text="❤️" (tap)="appendToTextField(textField2, '❤️')"></Label>
+      <Label col="6" text="Close️" (tap)="closeKeyboard(textField2)"></Label>
+    </GridLayout>
+  </KeyboardToolbar>
+</GridLayout>

@@ -131,7 +131,7 @@ export class Toolbar extends ToolbarBase {
 
     // at this point, topmost().currentPage is null, so do it like this:
     let page: any = parent;
-    while (!page.frame) {
+    while (!page && !page.frame) {
       page = page.parent;
     }
 

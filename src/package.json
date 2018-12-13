@@ -1,58 +1,60 @@
 {
-    "name": "nativescript-keyboard-toolbar",
-    "version": "1.0.0",
-    "description": "NativeScript Keyboard Toolbar plugin",
-    "main": "keyboard-toolbar",
-    "typings": "index.d.ts",
-    "nativescript": {
-        "platforms": {
-            "android": "4.0.0",
-            "ios": "4.0.0"
-        }
-    },
-    "scripts": {
-        "tsc": "tsc",
-        "build": "npm i && npm run tsc",
-        "test.android": "npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
-        "test.ios": "npm run tsc && npm run tslint && cd ../demo && tns build ios && tns test ios --justlaunch",
-        "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\"",
-        "plugin.tscwatch": "npm run tsc -- -w",
-        "demo.ios": "npm run tsc && cd ../demo && tns run ios --syncAllFiles",
-        "demo.android": "npm run tsc && cd ../demo && tns run android --syncAllFiles",
-        "demo-vue.ios": "npm run tsc && cd ../demo-vue && tns run ios --bundle",
-        "demo-vue.android": "npm run tsc && cd ../demo-vue && tns run android --bundle",
-        "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-keyboard-toolbar && tns plugin add ../src && cd ../demo-vue && tns plugin remove nativescript-keyboard-toolbar && tns plugin add ../src",
-        "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**'"
-    },
-    "keywords": [
-        "ecosystem:NativeScript",
-        "NativeScript",
-        "JavaScript",
-        "Android",
-        "iOS",
-        "Keyboard",
-        "Toolbar",
-        "Accessorybar"
-    ],
-    "author": {
-        "name": "Eddy Verbruggen",
-        "email": "eddyverbruggen@gmail.com"
-    },
-    "bugs": {
-        "url": "https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar/issues"
-    },
-    "license": "Apache-2.0",
-    "homepage": "https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar",
-    "readmeFilename": "README.md",
-    "devDependencies": {
-        "tns-core-modules": "~5.0.5",
-        "tns-platform-declarations": "~5.0.5",
-        "typescript": "~2.8.2",
-        "prompt": "^1.0.0",
-        "rimraf": "^2.6.2",
-        "tslint": "^5.11.0",
-        "semver": "^5.6.0"
-    },
-    "dependencies": {},
-    "bootstrapper": "nativescript-plugin-seed"
+  "name": "nativescript-keyboard-toolbar",
+  "version": "1.0.0",
+  "description": "NativeScript Keyboard Toolbar plugin",
+  "main": "keyboard-toolbar",
+  "typings": "index.d.ts",
+  "nativescript": {
+    "platforms": {
+      "android": "4.0.0",
+      "ios": "4.0.0"
+    }
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "build": "npm i && npm run tsc",
+    "test.android": "npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
+    "test.ios": "npm run tsc && npm run tslint && cd ../demo && tns build ios && tns test ios --justlaunch",
+    "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\"",
+    "plugin.tscwatch": "npm run tsc -- -w",
+    "demo.ios": "npm run tsc && cd ../demo && tns run ios --syncAllFiles",
+    "demo.android": "npm run tsc && cd ../demo && tns run android --syncAllFiles",
+    "demo-ng.ios": "npm run tsc && cd ../demo-ng && tns run ios --syncAllFiles",
+    "demo-ng.android": "npm run tsc && cd ../demo-ng && tns run android --syncAllFiles",
+    "demo-vue.ios": "npm run tsc && cd ../demo-vue && tns run ios --bundle",
+    "demo-vue.android": "npm run tsc && cd ../demo-vue && tns run android --bundle",
+    "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-keyboard-toolbar && tns plugin add ../src && cd ../demo-vue && tns plugin remove nativescript-keyboard-toolbar && tns plugin add ../src && cd ../demo-ng && tns plugin remove nativescript-keyboard-toolbar && tns plugin add ../src",
+    "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**'"
+  },
+  "keywords": [
+    "ecosystem:NativeScript",
+    "NativeScript",
+    "JavaScript",
+    "Android",
+    "iOS",
+    "Keyboard",
+    "Toolbar",
+    "Accessorybar"
+  ],
+  "author": {
+    "name": "Eddy Verbruggen",
+    "email": "eddyverbruggen@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar/issues"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "tns-core-modules": "~5.0.5",
+    "tns-platform-declarations": "~5.0.5",
+    "typescript": "~2.8.2",
+    "prompt": "^1.0.0",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.11.0",
+    "semver": "^5.6.0"
+  },
+  "dependencies": {},
+  "bootstrapper": "nativescript-plugin-seed"
 }

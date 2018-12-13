@@ -33,7 +33,7 @@ export class Toolbar extends ToolbarBase {
 
     setTimeout(() => {
       const page = topmost().currentPage;
-      const forView = <View>page.getViewById(this.forId);
+      const forView = page.modal ? page.modal.getViewById(this.forId) : page.getViewById(this.forId);
 
       if (!forView) {
         console.log(`\n⌨ ⌨ ⌨ Please make sure forId="<view id>" resolves to a visible view, or the toolbar won't render correctly! Example: <Toolbar forId="myId" height="44">\n\n`);

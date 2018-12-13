@@ -16,6 +16,8 @@ demo/*.d.ts
 !demo/references.d.ts
 demo/lib
 demo/platforms
+demo-vue/platforms
+demo-ng/platforms
 node_modules
 publish/package
 demo/report/report.html

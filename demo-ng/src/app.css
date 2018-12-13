@@ -1,0 +1,35 @@
+/*
+In NativeScript, the app.css file is where you place CSS rules that
+you would like to apply to your entire application. Check out
+http://docs.nativescript.org/ui/styling for a full list of the CSS
+selectors and properties you can use to style UI components.
+
+/*
+In many cases you may want to use the NativeScript core theme instead
+of writing your own CSS rules. For a full list of class names in the theme
+refer to http://docs.nativescript.org/ui/theme.
+*/
+@import '~nativescript-theme-core/css/core.light.css';
+
+TextField, TextView {
+    font-size: 13;
+    padding: 6 0;
+}
+
+TextField {
+    font-size: 13;
+    padding: 6;
+}
+
+.toolbar {
+    background-color: #f6f6f6;
+    border-color: #c6c6c6;
+    border-top-width: 1px;
+}
+
+.toolbar Label {
+    color: #777;
+    padding: 5 13;
+    text-align: center;
+    vertical-align: center;
+}
