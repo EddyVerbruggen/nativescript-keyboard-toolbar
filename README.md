@@ -14,16 +14,28 @@
 
 <img src="https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar/raw/master/media/keyboard-toolbar-demo.gif" height="550px" />
 
-_iOS and Android running the included [demo](/demo) - [much better framerate on YouTube](https://www.youtube.com/watch?v=JJOOXrcopSA)!_
+_iOS and Android running the included [demo](/demo) - much better framerate [on YouTube](https://www.youtube.com/watch?v=JJOOXrcopSA)!_
 
 ## What The Keyboard!?
 Glad you asked 😅! Here's a few highlights:
 
-- ⌨️ Mobile keyboards are a compromise, let's make it easier to work with.
-- 🥅 Design goal = declare any NativeScript layout and stick it on top of the soft keyboard.
-- 🙅‍♀️ No dependencies - only stuff in `tns-core-modules` your app already has.
+[x] ⌨️ Mobile keyboards are a compromise, let's make them easier to work with.
+[x] 🥅 Design goal = declare any NativeScript layout and stick it on top of the soft keyboard.
+[x] 🙅‍♀️ No dependencies - only stuff in `tns-core-modules` your app already has.
 
-## Demo app (Core)
+## Installation
+```bash
+tns plugin add nativescript-keyboard-toolbar
+```
+
+## Usage with NativeScript Core
+
+### API
+
+```xml
+```
+
+### Demo app
 Check the source in the [demo](/demo) folder, or run it on your own device:
 
 ```bash
@@ -33,7 +45,14 @@ npm i
 npm run demo.ios # or .android
 ```
 
-## Demo app (Angular)
+## Usage with NativeScript-Angular
+
+### API
+
+```html
+```
+
+### Demo app
 Check the source in the [demo-ng](/demo-ng) folder, or run it on your own device:
 
 ```bash
@@ -43,7 +62,14 @@ npm i
 npm run demo-ng.ios # or .android
 ```
 
-## Demo app (Vue)
+## Usage with NativeScript-Vue
+
+### API
+
+```html
+```
+
+### Demo app
 Check the source in the [demo-vue](/demo-vue) folder, or run it on your own device:
 
 ```bash
@@ -52,14 +78,6 @@ cd nativescript-keyboard-toolbar/src
 npm i
 npm run demo-vue.ios # or .android
 ```
-
-## Installation
-```bash
-tns plugin add nativescript-keyboard-toolbar
-```
-
-## API
-TODO
 
 ## Future work
 - `SearchBar` support.
