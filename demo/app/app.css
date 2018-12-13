@@ -30,6 +30,8 @@ Label.scroll-text {
 .toolbar Label {
     color: #777;
     padding: 5 13;
+    text-align: center;
+    vertical-align: center;
 }
 
 .toolbar.toolbar-twitter Label {

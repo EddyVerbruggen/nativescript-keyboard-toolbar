@@ -30,19 +30,17 @@ export class Toolbar extends ToolbarBase {
             parent.translateY = this.startPositionY - newKeyboardHeight - (this.lastHeight / screen.mainScreen.scale);
           }
         });
-  }
-
-  protected _unloaded(): void {
-    application.ios.removeNotificationObserver(this.keyboardNotificationObserver, UIKeyboardWillChangeFrameNotification);
-  }
-
-  _addChildFromBuilder(name: string, value: View): void {
-    super._addChildFromBuilder(name, value);
-    const parent = value.parent as View;
 
     setTimeout(() => {
       const page = topmost().currentPage;
-      const forView = <View>page.getViewById(this.for);
+      const forView = <View>page.getViewById(this.forId);
+
+      if (!forView) {
+        console.log(`\n⌨ ⌨ ⌨ Please make sure forId="<view id>" resolves to a visible view, or the toolbar won't render correctly! Example: <Toolbar forId="myId" height="44">\n\n`);
+        return;
+      }
+
+      const parent = this.content.parent as View;
 
       // experimental support for non-text widgets.. but not sure if this is useful, so not documenting it yet
       const isText = forView instanceof EditableTextBase;
@@ -92,6 +90,10 @@ export class Toolbar extends ToolbarBase {
       }
 
     }, 500);
+  }
+
+  protected _unloaded(): void {
+    application.ios.removeNotificationObserver(this.keyboardNotificationObserver, UIKeyboardWillChangeFrameNotification);
   }
 
   protected _layout(left: number, top: number, right: number, bottom: number): void {

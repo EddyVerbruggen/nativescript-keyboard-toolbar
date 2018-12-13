@@ -135,14 +135,21 @@ export class HelloWorldModel extends Observable {
   onTapTv1Expand(): void {
     const page = topmost().currentPage;
     const textView = <TextView>page.getViewById("tv1");
-    // textView.height = +textView.height + 10;
-    (textView.height as number) += 10;
+    if ((textView.height as number) < 130) {
+      (textView.height as number) += 10;
+    } else {
+      console.log("Text already expanded to the maximum we allow ;)");
+    }
   }
 
   onTapTv1Contract(): void {
     const page = topmost().currentPage;
     const textView = <TextView>page.getViewById("tv1");
-    (textView.height as number) -= 10;
+    if ((textView.height as number) > 30) {
+      (textView.height as number) -= 10;
+    } else {
+      console.log("Text already contracted to the minimum we allow ;)");
+    }
   }
 
   onTapTv2(): void {

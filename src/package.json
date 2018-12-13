@@ -19,9 +19,9 @@
         "plugin.tscwatch": "npm run tsc -- -w",
         "demo.ios": "npm run tsc && cd ../demo && tns run ios --syncAllFiles",
         "demo.android": "npm run tsc && cd ../demo && tns run android --syncAllFiles",
-        "demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
-        "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-keyboard-toolbar && tns plugin add ../src",
-        "clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i",
+        "demo-vue.ios": "npm run tsc && cd ../demo-vue && tns run ios --bundle",
+        "demo-vue.android": "npm run tsc && cd ../demo-vue && tns run android --bundle",
+        "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-keyboard-toolbar && tns plugin add ../src && cd ../demo-vue && tns plugin remove nativescript-keyboard-toolbar && tns plugin add ../src",
         "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**'"
     },
     "keywords": [

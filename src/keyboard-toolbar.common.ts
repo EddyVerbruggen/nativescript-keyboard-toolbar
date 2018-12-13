@@ -4,8 +4,8 @@ import { AddChildFromBuilder } from "tns-core-modules/ui/core/view";
 import { booleanConverter } from "tns-core-modules/ui/core/view-base";
 import { VerticalAlignment } from "tns-core-modules/ui/styling/style-properties";
 
-export const forProperty = new Property<ToolbarBase, string>({
-  name: "for"
+export const forIdProperty = new Property<ToolbarBase, string>({
+  name: "forId"
 });
 
 export const showWhenKeyboardHiddenProperty = new Property<ToolbarBase, boolean>({
@@ -29,7 +29,7 @@ export abstract class ToolbarBase extends ContentView implements AddChildFromBui
   // if the keyboard is hidden without blurring the textfield (and vice versa) then the blur/focus events don't fire, so track focus manually
   protected hasFocus = false;
 
-  protected for: string;
+  protected forId: string;
 
   protected showWhenKeyboardHidden: boolean;
 
@@ -53,9 +53,7 @@ export abstract class ToolbarBase extends ContentView implements AddChildFromBui
     super.onLoaded();
     // TODO figure out how to determine and apply the parent's height automatically based on the child's height
     if (isNaN(+this.height)) {
-      console.log(`\n⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ `);
-      console.log(`⌨  Please specify height="<nr of px>" or the toolbar won't render correctly! Example: <Toolbar for="${this.for}" height="44">`);
-      console.log(`⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨ ⌨\n\n`);
+      console.log(`\n⌨ ⌨ ⌨ Please specify height="<nr of px>" or the toolbar won't render correctly! Example: <Toolbar forId="${this.forId}" height="44">\n\n`);
     }
     this._loaded();
   }
@@ -74,8 +72,8 @@ export abstract class ToolbarBase extends ContentView implements AddChildFromBui
     this.content = value;
   }
 
-  [forProperty.setNative](value: string) {
-    this.for = value;
+  [forIdProperty.setNative](value: string) {
+    this.forId = value;
   }
 
   [showWhenKeyboardHiddenProperty.setNative](value: boolean) {
@@ -87,6 +85,6 @@ export abstract class ToolbarBase extends ContentView implements AddChildFromBui
   }
 }
 
-forProperty.register(ToolbarBase);
+forIdProperty.register(ToolbarBase);
 showWhenKeyboardHiddenProperty.register(ToolbarBase);
 showAtBottomWhenKeyboardHiddenProperty.register(ToolbarBase);
