@@ -17,9 +17,7 @@ export class ItemDetailModalComponent {
   constructor(private itemService: ItemService,
               private route: ActivatedRoute,
               private params: ModalDialogParams) {
-
     const id = +params.context.id;
-    console.log("id: " + id);
     this.item = this.itemService.getItem(id);
   }
 

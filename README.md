@@ -1,8 +1,65 @@
-# NativeScript Keyboard Toolbar plugin
+# NativeScript Keyboard Toolbar
 
-> Work in progress.. will update with more info when relevant.. but it looks promising! 😍
+[![NPM version][npm-image]][npm-url]
+[![Downloads][downloads-image]][npm-url]
+[![Twitter Follow][twitter-image]][twitter-url]
 
-<img src="media/keyboard-toolbar-demo.gif" height="550px" />
+[build-status]:https://travis-ci.org/EddyVerbruggen/nativescript-keyboard-toolbar.svg?branch=master
+[build-url]:https://travis-ci.org/EddyVerbruggen/nativescript-keyboard-toolbar
+[npm-image]:http://img.shields.io/npm/v/nativescript-keyboard-toolbar.svg
+[npm-url]:https://npmjs.org/package/nativescript-keyboard-toolbar
+[downloads-image]:http://img.shields.io/npm/dm/nativescript-keyboard-toolbar.svg
+[twitter-image]:https://img.shields.io/twitter/follow/eddyverbruggen.svg?style=social&label=Follow%20me
+[twitter-url]:https://twitter.com/eddyverbruggen
+
+<img src="https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar/raw/master/media/keyboard-toolbar-demo.gif" height="550px" />
+
+_iOS and Android running the included [demo](/demo) - [much better framerate on YouTube](https://www.youtube.com/watch?v=JJOOXrcopSA)!_
+
+## What The Keyboard!?
+Glad you asked 😅! Here's a few highlights:
+
+- ⌨️ Mobile keyboards are a compromise, let's make it easier to work with.
+- 🥅 Design goal = declare any NativeScript layout and stick it on top of the soft keyboard.
+- 🙅‍♀️ No dependencies - only stuff in `tns-core-modules` your app already has.
+
+## Demo app (Core)
+Check the source in the [demo](/demo) folder, or run it on your own device:
+
+```bash
+git clone https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar
+cd nativescript-keyboard-toolbar/src
+npm i
+npm run demo.ios # or .android
+```
+
+## Demo app (Angular)
+Check the source in the [demo-ng](/demo-ng) folder, or run it on your own device:
+
+```bash
+git clone https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar
+cd nativescript-keyboard-toolbar/src
+npm i
+npm run demo-ng.ios # or .android
+```
+
+## Demo app (Vue)
+Check the source in the [demo-vue](/demo-vue) folder, or run it on your own device:
+
+```bash
+git clone https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar
+cd nativescript-keyboard-toolbar/src
+npm i
+npm run demo-vue.ios # or .android
+```
+
+## Installation
+```bash
+tns plugin add nativescript-keyboard-toolbar
+```
+
+## API
+TODO
 
 ## Future work
 - `SearchBar` support.

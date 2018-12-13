@@ -24,7 +24,8 @@ export class ItemsComponent implements OnInit {
   }
 
   appendToTextField(textField: EditableTextBase, what: string): void {
-    textField.text += what + " ";
+    textField.text += " " + what + " ";
+    this.positionCursorAtEnd(textField);
   }
 
   closeKeyboard(textField: EditableTextBase): void {
@@ -43,5 +44,11 @@ export class ItemsComponent implements OnInit {
     this.modal.showModal(ItemDetailModalComponent, options).then(() => {
       console.log("modal closed");
     });
+  }
+
+  private positionCursorAtEnd(textView: EditableTextBase): void {
+    if (textView.android) {
+      textView.android.setSelection(textView.text.length);
+    }
   }
 }

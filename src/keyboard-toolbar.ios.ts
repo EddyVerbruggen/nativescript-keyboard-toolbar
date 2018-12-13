@@ -1,6 +1,6 @@
 import * as application from "tns-core-modules/application";
 import { screen } from "tns-core-modules/platform";
-import { View } from "tns-core-modules/ui/core/view";
+import { View, ViewBase } from "tns-core-modules/ui/core/view";
 import { EditableTextBase } from "tns-core-modules/ui/editable-text-base";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { topmost } from "tns-core-modules/ui/frame";
@@ -31,15 +31,7 @@ export class Toolbar extends ToolbarBase {
           }
         });
 
-    setTimeout(() => {
-      const page = topmost().currentPage;
-      const forView = page.modal ? page.modal.getViewById(this.forId) : page.getViewById(this.forId);
-
-      if (!forView) {
-        console.log(`\n⌨ ⌨ ⌨ Please make sure forId="<view id>" resolves to a visible view, or the toolbar won't render correctly! Example: <Toolbar forId="myId" height="44">\n\n`);
-        return;
-      }
-
+    const onViewForIdFound = forView => {
       const parent = this.content.parent as View;
 
       // experimental support for non-text widgets.. but not sure if this is useful, so not documenting it yet
@@ -88,8 +80,31 @@ export class Toolbar extends ToolbarBase {
           });
         });
       }
+    };
 
-    }, 500);
+    // TODO this can be reused on Android (but I haven't seen the underlying issue there (yet))
+    this.getViewForId(10)
+        .then(view => onViewForIdFound(view))
+        .catch(() => console.log(`\n⌨ ⌨ ⌨ Please make sure forId="<view id>" resolves to a visible view, or the toolbar won't render correctly! Example: <Toolbar forId="myId" height="44">\n\n`));
+  }
+
+  // depending on the framework (looking at you, Angular!) it may take longer to find the view, so here we try to get it asap (instead of a fixed 1sec timeout for instance)
+  private getViewForId(attemptsLeft: number): Promise<ViewBase> {
+    return new Promise<ViewBase>((resolve, reject) => {
+      if (attemptsLeft-- > 0) {
+        setTimeout(() => {
+          const page = topmost().currentPage;
+          const found = page.modal ? page.modal.getViewById(this.forId) : page.getViewById(this.forId);
+          if (found) {
+            resolve(found);
+          } else {
+            this.getViewForId(attemptsLeft).then(resolve).catch(reject);
+          }
+        }, 200);
+      } else {
+        reject();
+      }
+    });
   }
 
   protected _unloaded(): void {
