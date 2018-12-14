@@ -6,6 +6,8 @@ import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { topmost } from "tns-core-modules/ui/frame";
 import { ToolbarBase } from "./keyboard-toolbar.common";
 
+declare const IQKeyboardManager: any;
+
 export class Toolbar extends ToolbarBase {
   private startPositionY: number;
   private lastHeight: number;
@@ -37,8 +39,15 @@ export class Toolbar extends ToolbarBase {
       // experimental support for non-text widgets.. but not sure if this is useful, so not documenting it yet
       const isText = forView instanceof EditableTextBase;
 
+      const hasIQKeyboardManagerInstalled = typeof(IQKeyboardManager) !== "undefined";
+      const iqKeyboardManagerOriginalDistance = hasIQKeyboardManagerInstalled ? IQKeyboardManager.sharedManager().keyboardDistanceFromTextField : 0;
+
       if (isText) {
         forView.on("focus", () => {
+          if (hasIQKeyboardManagerInstalled) {
+            IQKeyboardManager.sharedManager().keyboardDistanceFromTextField = iqKeyboardManagerOriginalDistance + parent.height;
+          }
+
           this.hasFocus = true;
           // wrap in a timeout, to make sure this runs after 'UIKeyboardWillChangeFrameNotification'
           setTimeout(() => {
@@ -55,6 +64,10 @@ export class Toolbar extends ToolbarBase {
         });
 
         forView.on("blur", () => {
+          if (hasIQKeyboardManagerInstalled) {
+            IQKeyboardManager.sharedManager().keyboardDistanceFromTextField = iqKeyboardManagerOriginalDistance;
+          }
+
           this.hasFocus = false;
           const animateToY = this.showWhenKeyboardHidden === true && this.showAtBottomWhenKeyboardHidden !== true ? 0 : this.startPositionY;
           this.log("blur, animateToY: " + animateToY);
