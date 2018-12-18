@@ -212,11 +212,10 @@ If you have [IQKeyboardManager](https://github.com/tjvantoll/nativescript-IQKeyb
 keyboard behavior on iOS, then this plugin will detect it and add the height of your custom toolbar to the scroll offset
 IQKeyboardManager applies. You can see this in action in the [NativeScript Core demo app](/demo).
 
-Note that you may want to suppress IQKeyboardManager's own toolbar in this case (to avoid a double toolbar), as shown [here](https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar/blob/f81cfb2e5c84fda16e8e735bf34b1030a8b5eeb6/demo/app/main-view-model.ts#L32-L33).
+You may want to suppress IQKeyboardManager's own toolbar in this case (to avoid a double toolbar), [as shown here](https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar/blob/f81cfb2e5c84fda16e8e735bf34b1030a8b5eeb6/demo/app/main-view-model.ts#L32-L33).
 
 ## Future work
-- `SearchBar` support.
 - Orientation-change support.
-- Dismiss keyboard on iOS when tapping outside the keyboard (configurable). 
+- Dismiss keyboard on iOS when tapping outside the keyboard (configurable). Fot the time being you can add and configure IQKeyboardManager as mentioned above.
 - Auto-scroll the view if the keyboard overlaps the text field (on iOS you can already do that with [IQKeyboardManager](https://github.com/tjvantoll/nativescript-IQKeyboardManager)).
 - Modal support on Android (currently you can't use the toolbar in a modal because the toolbar is behind the modal)
