@@ -4,11 +4,11 @@
     <GridLayout>
         <ScrollView>
             <StackLayout class="p-x-20">
-                <!--<TextField id="tf1" hint="Enter the price" keyboardType="number" borderColor="#eee" borderWidth="1" class="m-t-15"/>-->
-                <!--<TextField id="tf2" text="{{ getSliderValue() }}" keyboardType="number" borderColor="#eee" borderWidth="1" class="m-t-15"/>-->
-                <!--<TextField id="tf3" text="{{ email }}" hint="email@domain.com" keyboardType="email" borderColor="#eee" borderWidth="1" class="m-t-15"/>-->
-                <!--<TextView id="tv1" text="" hint="Tell us about yourself.." borderColor="#eee" borderWidth="1" height="60" class="m-t-15" android:paddingLeft="6"/>-->
-                <!--<TextView id="tv2" text="Say it with emoji!" borderColor="#eee" borderWidth="1" height="60" class="m-t-15" android:paddingLeft="6"/>-->
+                <TextField id="tf1" hint="Enter the price" keyboardType="number" borderColor="#eee" borderWidth="1" class="m-t-15"/>
+                <TextField id="tf2" text="{{ getSliderValue() }}" keyboardType="number" borderColor="#eee" borderWidth="1" class="m-t-15"/>
+                <TextField id="tf3" text="{{ email }}" hint="email@domain.com" keyboardType="email" borderColor="#eee" borderWidth="1" class="m-t-15"/>
+                <TextView id="tv1" text="" hint="Tell us about yourself.." borderColor="#eee" borderWidth="1" height="60" class="m-t-15" android:paddingLeft="6"/>
+                <TextView id="tv2" text="Say it with emoji!" borderColor="#eee" borderWidth="1" height="60" class="m-t-15" android:paddingLeft="6"/>
                 <TextView id="tv3" hint="Don't @ me! " keyboardType="email" borderColor="#eee" borderWidth="1" height="60" class="m-t-15 m-b-20" android:paddingLeft="6"/>
 
                 <Label text="Added some text to make the page scroll.." class="scroll-text"/>
