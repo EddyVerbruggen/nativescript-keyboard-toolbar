@@ -39,6 +39,7 @@ Label.scroll-text {
 }
 
 .toolbar Button {
+    border-radius: 1;
 }
 
 .toolbar Label.email-valid {

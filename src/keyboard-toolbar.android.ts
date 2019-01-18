@@ -68,7 +68,7 @@ export class Toolbar extends ToolbarBase {
         that.content.android.getWindowVisibleDisplayFrame(rect);
 
         const newKeyboardHeight = (Toolbar.getUsableScreenSizeY() - rect.bottom) / screen.mainScreen.scale;
-        if (newKeyboardHeight === 0 && that.lastKeyboardHeight === undefined) {
+        if (newKeyboardHeight <= 0 && that.lastKeyboardHeight === undefined) {
           return;
         }
 
@@ -80,7 +80,7 @@ export class Toolbar extends ToolbarBase {
         that.lastKeyboardHeight = newKeyboardHeight;
 
         if (that.hasFocus) {
-          if (newKeyboardHeight === 0) {
+          if (newKeyboardHeight <= 0) {
             that.hideToolbar(that.content.parent);
           } else {
             that.showToolbar(that.content.parent);
@@ -112,7 +112,7 @@ export class Toolbar extends ToolbarBase {
   }
 
   private hideToolbar(parent): void {
-    const animateToY = this.showWhenKeyboardHidden === true && this.showAtBottomWhenKeyboardHidden !== true ? 0 : this.startPositionY;
+    const animateToY = this.showWhenKeyboardHidden === true && this.showAtBottomWhenKeyboardHidden !== true ? 0 : (this.startPositionY + this.navbarHeight);
     // console.log("hideToolbar, animateToY: " + animateToY);
     parent.animate({
       translate: {x: 0, y: animateToY},
@@ -151,10 +151,10 @@ export class Toolbar extends ToolbarBase {
           parent.translateY = this.startPositionY;
         }
       } else {
-        parent.translateY = this.startPositionY;
+        parent.translateY = this.startPositionY + this.navbarHeight;
       }
     } else if (this.lastHeight !== newHeight) {
-      parent.translateY = this.startPositionY;
+      parent.translateY = this.startPositionY + this.navbarHeight;
     }
     this.lastHeight = newHeight;
   }

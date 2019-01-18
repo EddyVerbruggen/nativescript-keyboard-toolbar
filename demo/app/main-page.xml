@@ -4,11 +4,11 @@
     <GridLayout>
         <ScrollView>
             <StackLayout class="p-x-20">
-                <TextField id="tf1" hint="Enter the price" keyboardType="number" borderColor="#eee" borderWidth="1" class="m-t-15"/>
-                <TextField id="tf2" text="{{ getSliderValue() }}" keyboardType="number" borderColor="#eee" borderWidth="1" class="m-t-15"/>
-                <TextField id="tf3" text="{{ email }}" hint="email@domain.com" keyboardType="email" borderColor="#eee" borderWidth="1" class="m-t-15"/>
-                <TextView id="tv1" text="" hint="Tell us about yourself.." borderColor="#eee" borderWidth="1" height="60" class="m-t-15" android:paddingLeft="6"/>
-                <TextView id="tv2" text="Say it with emoji!" borderColor="#eee" borderWidth="1" height="60" class="m-t-15" android:paddingLeft="6"/>
+                <!--<TextField id="tf1" hint="Enter the price" keyboardType="number" borderColor="#eee" borderWidth="1" class="m-t-15"/>-->
+                <!--<TextField id="tf2" text="{{ getSliderValue() }}" keyboardType="number" borderColor="#eee" borderWidth="1" class="m-t-15"/>-->
+                <!--<TextField id="tf3" text="{{ email }}" hint="email@domain.com" keyboardType="email" borderColor="#eee" borderWidth="1" class="m-t-15"/>-->
+                <!--<TextView id="tv1" text="" hint="Tell us about yourself.." borderColor="#eee" borderWidth="1" height="60" class="m-t-15" android:paddingLeft="6"/>-->
+                <!--<TextView id="tv2" text="Say it with emoji!" borderColor="#eee" borderWidth="1" height="60" class="m-t-15" android:paddingLeft="6"/>-->
                 <TextView id="tv3" hint="Don't @ me! " keyboardType="email" borderColor="#eee" borderWidth="1" height="60" class="m-t-15 m-b-20" android:paddingLeft="6"/>
 
                 <Label text="Added some text to make the page scroll.." class="scroll-text"/>
@@ -55,7 +55,7 @@
                 <Label col="0" text="{{ iconValid }}" class="icon m-l-10 email-valid" verticalAlignment="center" horizontalAlignment="center" visibility="{{ emailOK() ? 'visible' : 'collapse' }}"/>
                 <Label col="0" text="{{ iconInvalid }}" class="icon m-l-10 email-invalid" verticalAlignment="center" horizontalAlignment="center" visibility="{{ !emailOK() ? 'visible' : 'collapse' }}"/>
                 <Label col="1" text="{{ emailOK() ? 'looks good! 🍻' : 'email not OK yet..' }}" verticalAlignment="center" horizontalAlignment="center"/>
-                <Button col="2" text="Close" verticalAlignment="center" horizontalAlignment="right" class="m-r-10" tap="{{ hideKeyboardTf3 }}"/>
+                <Button col="2" text="close" verticalAlignment="center" horizontalAlignment="right" class="m-r-10" tap="{{ hideKeyboardTf3 }}"/>
             </GridLayout>
         </kt:Toolbar>
 
@@ -68,7 +68,7 @@
                 <Label col="4" text="{{ iconContract }}" class="icon" verticalAlignment="center" horizontalAlignment="center" tap="{{ onTapTv1Contract }}"/>
                 <Label col="5" text="{{ iconTrash }}" class="icon icon-trash" verticalAlignment="center" horizontalAlignment="center" tap="{{ onTapTv1Trash }}"/>
                 <!--<Button col="6" text="{{ iconMicrophone }}" class="icon" verticalAlignment="center" horizontalAlignment="right"/>-->
-                <Button col="6" text="Close" verticalAlignment="center" horizontalAlignment="right" class="m-r-10" tap="{{ hideKeyboardTv1 }}"/>
+                <Button col="6" text="close" verticalAlignment="center" horizontalAlignment="right" class="m-r-10" tap="{{ hideKeyboardTv1 }}"/>
             </GridLayout>
         </kt:Toolbar>
 
