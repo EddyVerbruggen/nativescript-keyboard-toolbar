@@ -1,5 +1,6 @@
 import { Observable } from "tns-core-modules/data/observable";
 import { action } from "tns-core-modules/ui/dialogs";
+import { isIOS } from "tns-core-modules/platform";
 import { topmost } from "tns-core-modules/ui/frame";
 import { TextView } from "tns-core-modules/ui/text-view";
 const emailValidator = require("email-validator");
@@ -30,7 +31,9 @@ export class HelloWorldModel extends Observable {
     super();
 
     // this suppresses IQKeyboardManager's toolbar (the one with < > and OK buttons)
-    IQKeyboardManager.sharedManager().enableAutoToolbar = false;
+    if (isIOS) {
+      IQKeyboardManager.sharedManager().enableAutoToolbar = false;
+    }
 
     // laughable code, I know, but it's just a quick demo
     setTimeout(() => {
