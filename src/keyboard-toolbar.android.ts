@@ -121,7 +121,6 @@ export class Toolbar extends ToolbarBase {
     }).then(() => {
     });
   }
-
   private applyInitialPosition(): void {
     if (this.startPositionY !== undefined) {
       return;
@@ -139,8 +138,8 @@ export class Toolbar extends ToolbarBase {
     const newHeight = parent.getMeasuredHeight();
 
     // this is the bottom navbar - which may be hidden by the user.. so figure out its actual height
-    this.isNavbarVisible = page.getMeasuredHeight() < Toolbar.getUsableScreenSizeY();
     this.navbarHeight = Toolbar.getNavbarHeight();
+    this.isNavbarVisible = !!this.navbarHeight; 
 
     this.startPositionY = screen.mainScreen.heightDIPs - y - ((this.showWhenKeyboardHidden === true ? newHeight : 0) / screen.mainScreen.scale) - (this.isNavbarVisible ? this.navbarHeight : 0);
 
@@ -160,13 +159,32 @@ export class Toolbar extends ToolbarBase {
   }
 
   private static getNavbarHeight() {
-    const resources = (<android.content.Context>ad.getApplicationContext()).getResources();
-    // note: there's also 'navigation_bar_height_landscape'
-    const resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-    if (resourceId > 0) {
-      return resources.getDimensionPixelSize(resourceId) / screen.mainScreen.scale;
+    //Code to detect correct height from: https://shiv19.com/how-to-get-android-navbar-height-nativescript-vanilla/
+    const context = (<android.content.Context>ad.getApplicationContext());
+    let navBarHeight = 0;
+    let windowManager = context.getSystemService(android.content.Context.WINDOW_SERVICE);
+    let d = windowManager.getDefaultDisplay();
+    
+    let realDisplayMetrics = new android.util.DisplayMetrics();
+    d.getRealMetrics(realDisplayMetrics);
+
+    let realHeight = realDisplayMetrics.heightPixels;
+    let realWidth = realDisplayMetrics.widthPixels;
+
+    let displayMetrics = new android.util.DisplayMetrics();
+    d.getMetrics(displayMetrics);
+
+    let displayHeight = displayMetrics.heightPixels;
+    let displayWidth = displayMetrics.widthPixels;
+
+    if((realHeight - displayHeight) > 0) { // Portrait
+        navBarHeight = realHeight - displayHeight;
+    } else if ((realWidth - displayWidth) > 0) { // Landscape
+        navBarHeight = realWidth - displayWidth;
     }
-    return 0;
+    // Convert to device independent pixels and return
+    return (navBarHeight 
+        / context.getResources().getDisplayMetrics().density);
   }
 
   private static getUsableScreenSizeY(): number {
