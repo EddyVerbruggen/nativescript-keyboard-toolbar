@@ -1,6 +1,6 @@
 {
   "name": "nativescript-keyboard-toolbar",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "NativeScript Keyboard Toolbar plugin",
   "main": "keyboard-toolbar",
   "typings": "index.d.ts",
