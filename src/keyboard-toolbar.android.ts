@@ -215,7 +215,12 @@ export class Toolbar extends ToolbarBase {
   }
 
   private static hasPermanentMenuKey() {
-    return android.view.ViewConfiguration.get(<android.content.Context>ad.getApplicationContext()).hasPermanentMenuKey();
+    if (android.view.ViewConfiguration.get(<android.content.Context>ad.getApplicationContext()).hasPermanentMenuKey()) {
+      return true;
+    }
+    const hasBackKey = android.view.KeyCharacterMap.deviceHasKey(android.view.KeyEvent.KEYCODE_BACK);
+    const hasHomeKey = android.view.KeyCharacterMap.deviceHasKey(android.view.KeyEvent.KEYCODE_HOME);
+    return (!(hasBackKey && hasHomeKey));
   }
 
   private static getUsableScreenSizeY(): number {
