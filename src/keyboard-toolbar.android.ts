@@ -15,6 +15,7 @@ export class Toolbar extends ToolbarBase {
   private lastKeyboardHeight: number;
   private onGlobalLayoutListener: android.view.ViewTreeObserver.OnGlobalLayoutListener;
   private thePage: any;
+  private static supportVirtualKeyboardCheck;
 
   // private onScrollChangedListener: android.view.ViewTreeObserver.OnScrollChangedListener;
 
@@ -108,7 +109,8 @@ export class Toolbar extends ToolbarBase {
 
     // some devices (Samsung S8) with a hidden virtual navbar show the navbar when the keyboard is open, so subtract its height
     if (!this.isNavbarVisible) {
-      const isNavbarVisibleWhenKeyboardOpen = (this.thePage.getMeasuredHeight() < Toolbar.getUsableScreenSizeY() && Toolbar.hasPermanentMenuKey());
+      const isNavbarVisibleWhenKeyboardOpen = this.thePage.getMeasuredHeight() < Toolbar.getUsableScreenSizeY() &&
+          (Toolbar.isVirtualNavbarHidden_butShowsWhenKeyboardIsOpen() || Toolbar.hasPermanentMenuKey);
       if (isNavbarVisibleWhenKeyboardOpen) {
         // caching for (very minor) performance reasons
         if (!this.navbarHeightWhenKeyboardOpen) {
@@ -215,12 +217,23 @@ export class Toolbar extends ToolbarBase {
   }
 
   private static hasPermanentMenuKey() {
-    if (android.view.ViewConfiguration.get(<android.content.Context>ad.getApplicationContext()).hasPermanentMenuKey()) {
-      return true;
+    return android.view.ViewConfiguration.get(<android.content.Context>ad.getApplicationContext()).hasPermanentMenuKey();
+  }
+
+  private static isVirtualNavbarHidden_butShowsWhenKeyboardIsOpen(): boolean {
+    if (Toolbar.supportVirtualKeyboardCheck !== undefined) {
+      return Toolbar.supportVirtualKeyboardCheck;
     }
-    const hasBackKey = android.view.KeyCharacterMap.deviceHasKey(android.view.KeyEvent.KEYCODE_BACK);
-    const hasHomeKey = android.view.KeyCharacterMap.deviceHasKey(android.view.KeyEvent.KEYCODE_HOME);
-    return (!(hasBackKey && hasHomeKey));
+    const SAMSUNG_NAVIGATION_EVENT = "navigationbar_hide_bar_enabled";
+    try {
+      // eventId is 1 in case the virtual navbar is hidden (but it shows when the keyboard opens)
+      Toolbar.supportVirtualKeyboardCheck = android.provider.Settings.Global.getInt(AndroidApp.foregroundActivity.getContentResolver(), SAMSUNG_NAVIGATION_EVENT) === 1;
+    } catch (e) {
+      // non-Samsung devices throw a 'SettingNotFoundException'
+      console.log(">> e: " + e);
+      Toolbar.supportVirtualKeyboardCheck = false;
+    }
+    return Toolbar.supportVirtualKeyboardCheck;
   }
 
   private static getUsableScreenSizeY(): number {
