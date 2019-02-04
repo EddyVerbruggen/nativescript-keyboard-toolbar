@@ -110,7 +110,7 @@ export class Toolbar extends ToolbarBase {
     // some devices (Samsung S8) with a hidden virtual navbar show the navbar when the keyboard is open, so subtract its height
     if (!this.isNavbarVisible) {
       const isNavbarVisibleWhenKeyboardOpen = this.thePage.getMeasuredHeight() < Toolbar.getUsableScreenSizeY() &&
-          (Toolbar.isVirtualNavbarHidden_butShowsWhenKeyboardIsOpen() || Toolbar.hasPermanentMenuKey);
+          (Toolbar.isVirtualNavbarHidden_butShowsWhenKeyboardIsOpen() || Toolbar.hasPermanentMenuKey());
       if (isNavbarVisibleWhenKeyboardOpen) {
         // caching for (very minor) performance reasons
         if (!this.navbarHeightWhenKeyboardOpen) {
