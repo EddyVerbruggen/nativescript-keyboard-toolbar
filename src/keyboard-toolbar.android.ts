@@ -6,6 +6,7 @@ import { Page } from "tns-core-modules/ui/page";
 import { TabView } from "tns-core-modules/ui/tab-view";
 import { ad } from "tns-core-modules/utils/utils";
 import { ToolbarBase } from "./keyboard-toolbar.common";
+import { topmost } from "tns-core-modules/ui/frame";
 
 export class Toolbar extends ToolbarBase {
   private startPositionY: number;
@@ -43,12 +44,16 @@ export class Toolbar extends ToolbarBase {
         });
       };
 
-      let pg = this.content.parent;
-      while (pg && !(pg instanceof Page)) {
-        pg = pg.parent;
+      let pg;
+      if (topmost()) {
+        pg = topmost().currentPage;
+      } else {
+        pg = this.content.parent;
+        while (pg && !(pg instanceof Page)) {
+          pg = pg.parent;
+        }
       }
       this.thePage = pg;
-
       const forView = <View>this.thePage.getViewById(this.forId);
 
       if (forView) {
