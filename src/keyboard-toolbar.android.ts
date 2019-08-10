@@ -3,6 +3,7 @@ import { screen } from "tns-core-modules/platform";
 import { View } from "tns-core-modules/ui/core/view";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { topmost } from "tns-core-modules/ui/frame";
+import { TabView } from "tns-core-modules/ui/tab-view";
 import { ad } from "tns-core-modules/utils/utils";
 import { ToolbarBase } from "./keyboard-toolbar.common";
 
@@ -28,38 +29,48 @@ export class Toolbar extends ToolbarBase {
     setTimeout(() => this.applyInitialPosition());
 
     setTimeout(() => {
+      const prepFocusEvents = (forView) => {
+        forView.on("focus", () => {
+          this.hasFocus = true;
+          if (that.lastKeyboardHeight) {
+            this.showToolbar(<View>this.content.parent);
+          }
+        });
+
+        forView.on("blur", () => {
+          this.hasFocus = false;
+          this.hideToolbar(<View>this.content.parent);
+        });
+      };
+
       this.thePage = topmost().currentPage;
       const forView = <View>this.thePage.getViewById(this.forId);
 
-      if (!forView) {
-        console.log(`\n⌨ ⌨ ⌨ Please make sure forId="<view id>" resolves to a visible view, or the toolbar won't render correctly! Example: <Toolbar forId="myId" height="44">\n\n`);
+      if (forView) {
+        prepFocusEvents(forView);
         return;
       }
 
-      const parent = <View>this.content.parent;
+      // let's see if we're inside a tabview, because of https://github.com/EddyVerbruggen/nativescript-keyboard-toolbar/issues/7
+      let p = this.thePage.parent;
+      while (p && !(p instanceof TabView)) {
+        p = p.parent;
+      }
 
-      forView.on("focus", () => {
-        this.hasFocus = true;
-        if (that.lastKeyboardHeight) {
-          this.showToolbar(parent);
-        }
-      });
-
-      forView.on("blur", () => {
-        this.hasFocus = false;
-        this.hideToolbar(parent);
-      });
+      if (p instanceof TabView) {
+        p.on(TabView.selectedIndexChangedEvent, () => {
+          let forView2 = p.getViewById(this.forId);
+          if (forView2) {
+            prepFocusEvents(forView2);
+            p.off(TabView.selectedIndexChangedEvent);
+          }
+        });
+      } else {
+        console.log(`\n⌨ ⌨ ⌨ Please make sure forId="<view id>" resolves to a visible view, or the toolbar won't render correctly! Example: <Toolbar forId="${this.forId || "myId"}" height="44">\n\n`);
+      }
     }, 500);
 
     const that = this;
-
-    /*
-    this.onScrollChangedListener = new android.view.ViewTreeObserver.OnScrollChangedListener({
-      onScrollChanged(): void {
-        console.log(">> scroll changed");
-      }
-    });
-    */
 
     this.onGlobalLayoutListener = new android.view.ViewTreeObserver.OnGlobalLayoutListener({
       onGlobalLayout(): void {
