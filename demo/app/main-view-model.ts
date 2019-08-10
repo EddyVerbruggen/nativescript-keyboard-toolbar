@@ -1,8 +1,9 @@
 import { Observable } from "tns-core-modules/data/observable";
 import { action } from "tns-core-modules/ui/dialogs";
 import { isIOS } from "tns-core-modules/platform";
-import { topmost } from "tns-core-modules/ui/frame";
+import { Page } from "tns-core-modules/ui/page";
 import { TextView } from "tns-core-modules/ui/text-view";
+
 const emailValidator = require("email-validator");
 
 declare const IQKeyboardManager: any;
@@ -27,7 +28,7 @@ export class HelloWorldModel extends Observable {
   iconExpand = String.fromCharCode(0xe88c);
   iconContract = String.fromCharCode(0xe88d);
 
-  constructor() {
+  constructor(private page: Page) {
     super();
 
     // this suppresses IQKeyboardManager's toolbar (the one with < > and OK buttons)
@@ -37,8 +38,7 @@ export class HelloWorldModel extends Observable {
 
     // laughable code, I know, but it's just a quick demo
     setTimeout(() => {
-      const page = topmost().currentPage;
-      const textView = <TextView>page.getViewById("tv3");
+      const textView = <TextView>this.page.getViewById("tv3");
       if (!textView) {
         return;
       }
@@ -77,14 +77,14 @@ export class HelloWorldModel extends Observable {
   }
 
   setAmountInTextField(args: any): void {
-    const textView = <TextView>topmost().currentPage.getViewById("tf1");
+    const textView = <TextView>this.page.getViewById("tf1");
     textView.text = args.object.value;
     this.positionCursorAtEnd(textView);
     textView.dismissSoftInput();
   }
 
   appendToTextView2(args: any): void {
-    const textView = <TextView>topmost().currentPage.getViewById("tv2");
+    const textView = <TextView>this.page.getViewById("tv2");
     textView.text += " " + args.object.text + " ";
     this.positionCursorAtEnd(textView);
   }
@@ -94,13 +94,13 @@ export class HelloWorldModel extends Observable {
   }
 
   goToTv2(args: any): void {
-    const textView = <TextView>topmost().currentPage.getViewById("tv2");
+    const textView = <TextView>this.page.getViewById("tv2");
     textView.focus();
     this.positionCursorAtEnd(textView);
   }
 
   appendToTextView3(args: any): void {
-    const textView = <TextView>topmost().currentPage.getViewById("tv3");
+    const textView = <TextView>this.page.getViewById("tv3");
     let newText = textView.text;
 
     const words = textView.text.split(" ");
@@ -116,7 +116,7 @@ export class HelloWorldModel extends Observable {
   }
 
   showUserForTextView3(args: any): boolean {
-    const textView = <TextView>topmost().currentPage.getViewById("tv3");
+    const textView = <TextView>this.page.getViewById("tv3");
     console.log(args.object.text);
     return textView.text.endsWith("@");
   }
@@ -135,14 +135,12 @@ export class HelloWorldModel extends Observable {
   }
 
   onTapTv1Trash(): void {
-    const page = topmost().currentPage;
-    const textView = <TextView>page.getViewById("tv1");
+    const textView = <TextView>this.page.getViewById("tv1");
     textView.text = "";
   }
 
   onTapTv1Expand(): void {
-    const page = topmost().currentPage;
-    const textView = <TextView>page.getViewById("tv1");
+    const textView = <TextView>this.page.getViewById("tv1");
     if ((textView.height as number) < 130) {
       (textView.height as number) += 10;
     } else {
@@ -151,8 +149,7 @@ export class HelloWorldModel extends Observable {
   }
 
   onTapTv1Contract(): void {
-    const page = topmost().currentPage;
-    const textView = <TextView>page.getViewById("tv1");
+    const textView = <TextView>this.page.getViewById("tv1");
     if ((textView.height as number) > 30) {
       (textView.height as number) -= 10;
     } else {
@@ -165,26 +162,22 @@ export class HelloWorldModel extends Observable {
   }
 
   hideKeyboardTf1(): void {
-    const page = topmost().currentPage;
-    const textView = <TextView>page.getViewById("tf1");
+    const textView = <TextView>this.page.getViewById("tf1");
     textView.dismissSoftInput();
   }
 
   hideKeyboardTf3(): void {
-    const page = topmost().currentPage;
-    const textView = <TextView>page.getViewById("tf3");
+    const textView = <TextView>this.page.getViewById("tf3");
     textView.dismissSoftInput();
   }
 
   hideKeyboardTv1(): void {
-    const page = topmost().currentPage;
-    const textView = <TextView>page.getViewById("tv1");
+    const textView = <TextView>this.page.getViewById("tv1");
     textView.dismissSoftInput();
   }
 
   hideKeyboardTv2(): void {
-    const page = topmost().currentPage;
-    const textView = <TextView>page.getViewById("tv2");
+    const textView = <TextView>this.page.getViewById("tv2");
     textView.dismissSoftInput();
   }
 

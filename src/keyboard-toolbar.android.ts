@@ -2,7 +2,7 @@ import { android as AndroidApp } from "tns-core-modules/application";
 import { screen } from "tns-core-modules/platform";
 import { View } from "tns-core-modules/ui/core/view";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
-import { topmost } from "tns-core-modules/ui/frame";
+import { Page } from "tns-core-modules/ui/page";
 import { TabView } from "tns-core-modules/ui/tab-view";
 import { ad } from "tns-core-modules/utils/utils";
 import { ToolbarBase } from "./keyboard-toolbar.common";
@@ -26,7 +26,7 @@ export class Toolbar extends ToolbarBase {
   }
 
   protected _loaded(): void {
-    setTimeout(() => this.applyInitialPosition());
+    setTimeout(() => this.applyInitialPosition(), 300);
 
     setTimeout(() => {
       const prepFocusEvents = (forView) => {
@@ -43,7 +43,12 @@ export class Toolbar extends ToolbarBase {
         });
       };
 
-      this.thePage = topmost().currentPage;
+      let pg = this.content.parent;
+      while (pg && !(pg instanceof Page)) {
+        pg = pg.parent;
+      }
+      this.thePage = pg;
+
       const forView = <View>this.thePage.getViewById(this.forId);
 
       if (forView) {
@@ -165,7 +170,11 @@ export class Toolbar extends ToolbarBase {
       this.thePage = this.thePage.parent;
     }
 
-    const {y} = parent.getLocationOnScreen();
+    const loc = parent.getLocationOnScreen();
+    if (!loc) {
+      return;
+    }
+    const y = loc.y;
     const newHeight = parent.getMeasuredHeight();
 
     // this is the bottom navbar - which may be hidden by the user.. so figure out its actual height

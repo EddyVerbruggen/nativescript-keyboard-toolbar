@@ -3,7 +3,7 @@ import { screen } from "tns-core-modules/platform";
 import { View, ViewBase } from "tns-core-modules/ui/core/view";
 import { EditableTextBase } from "tns-core-modules/ui/editable-text-base";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
-import { topmost } from "tns-core-modules/ui/frame";
+import { Page } from "tns-core-modules/ui/page";
 import { ToolbarBase } from "./keyboard-toolbar.common";
 
 declare const IQKeyboardManager: any;
@@ -106,7 +106,11 @@ export class Toolbar extends ToolbarBase {
     return new Promise<ViewBase>((resolve, reject) => {
       if (attemptsLeft-- > 0) {
         setTimeout(() => {
-          const page = topmost().currentPage;
+          let pg = this.content.parent;
+          while (pg && !(pg instanceof Page)) {
+            pg = pg.parent;
+          }
+          const page = <Page>pg;
           const found = page.modal ? page.modal.getViewById(this.forId) : page.getViewById(this.forId);
           if (found) {
             resolve(found);
