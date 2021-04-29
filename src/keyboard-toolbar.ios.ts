@@ -1,10 +1,4 @@
-import * as application from "tns-core-modules/application";
-import { screen } from "tns-core-modules/platform";
-import { View, ViewBase } from "tns-core-modules/ui/core/view";
-import { EditableTextBase } from "tns-core-modules/ui/editable-text-base";
-import { AnimationCurve } from "tns-core-modules/ui/enums";
-import { Page } from "tns-core-modules/ui/page";
-import { topmost } from "tns-core-modules/ui/frame";
+import { Application, Screen, View, ViewBase, EditableTextBase, Enums, Page, Frame} from "@nativescript/core";
 import { ToolbarBase } from "./keyboard-toolbar.common";
 
 declare const IQKeyboardManager: any;
@@ -16,7 +10,7 @@ export class Toolbar extends ToolbarBase {
   private keyboardNotificationObserver: any;
 
   protected _loaded(): void {
-    this.keyboardNotificationObserver = application.ios.addNotificationObserver(
+    this.keyboardNotificationObserver = Application.ios.addNotificationObserver(
         UIKeyboardWillChangeFrameNotification,
         notification => {
           const newKeyboardHeight = notification.userInfo.valueForKey(UIKeyboardFrameEndUserInfoKey).CGRectValue.size.height;
@@ -30,7 +24,7 @@ export class Toolbar extends ToolbarBase {
 
           if (!isFirstAnimation && this.hasFocus) {
             const parent = (<View>this.content.parent);
-            parent.translateY = this.startPositionY - newKeyboardHeight - (this.lastHeight / screen.mainScreen.scale);
+            parent.translateY = this.startPositionY - newKeyboardHeight - (this.lastHeight / Screen.mainScreen.scale);
           }
         });
 
@@ -52,12 +46,12 @@ export class Toolbar extends ToolbarBase {
           this.hasFocus = true;
           // wrap in a timeout, to make sure this runs after 'UIKeyboardWillChangeFrameNotification'
           setTimeout(() => {
-            const animateToY = this.startPositionY - this.lastKeyboardHeight - (this.showWhenKeyboardHidden === true ? 0 : (this.lastHeight / screen.mainScreen.scale));
+            const animateToY = this.startPositionY - this.lastKeyboardHeight - (this.showWhenKeyboardHidden === true ? 0 : (this.lastHeight / Screen.mainScreen.scale));
             this.log("focus, animateToY: " + animateToY);
             parent.animate({
               translate: {x: 0, y: animateToY},
               // see http://cubic-bezier.com/#.17,.67,.69,1.04
-              curve: AnimationCurve.cubicBezier(.32, .49, .56, 1),
+              curve: Enums.AnimationCurve.cubicBezier(.32, .49, .56, 1),
               duration: 370
             }).then(() => {
             });
@@ -74,7 +68,7 @@ export class Toolbar extends ToolbarBase {
           this.log("blur, animateToY: " + animateToY);
           parent.animate({
             translate: {x: 0, y: animateToY},
-            curve: AnimationCurve.cubicBezier(.32, .49, .56, 1), // perhaps make this one a little different as it's the same as the 'show' animation
+            curve: Enums.AnimationCurve.cubicBezier(.32, .49, .56, 1), // perhaps make this one a little different as it's the same as the 'show' animation
             duration: 370
           }).then(() => {
           });
@@ -83,12 +77,12 @@ export class Toolbar extends ToolbarBase {
       } else {
         // it's not a text widget, so just animate the toolbar
         forView.on("tap", () => {
-          const animateToY = this.startPositionY - (this.lastHeight / screen.mainScreen.scale);
+          const animateToY = this.startPositionY - (this.lastHeight / Screen.mainScreen.scale);
           this.log("tap, animateToY: " + animateToY);
           parent.animate({
             translate: {x: 0, y: animateToY},
             // see http://cubic-bezier.com/#.17,.67,.69,1.04
-            curve: AnimationCurve.cubicBezier(.32, .49, .56, 1),
+            curve: Enums.AnimationCurve.cubicBezier(.32, .49, .56, 1),
             duration: 370
           }).then(() => {
           });
@@ -108,8 +102,8 @@ export class Toolbar extends ToolbarBase {
       if (attemptsLeft-- > 0) {
         setTimeout(() => {
           let pg;
-          if (topmost()) {
-            pg = topmost().currentPage;
+          if (Frame.topmost()) {
+            pg = Frame.topmost().currentPage;
           } else {
             pg = this.content.parent;
             while (pg && !(pg instanceof Page)) {
@@ -131,7 +125,7 @@ export class Toolbar extends ToolbarBase {
   }
 
   protected _unloaded(): void {
-    application.ios.removeNotificationObserver(this.keyboardNotificationObserver, UIKeyboardWillChangeFrameNotification);
+    Application.ios.removeNotificationObserver(this.keyboardNotificationObserver, UIKeyboardWillChangeFrameNotification);
   }
 
   protected _layout(left: number, top: number, right: number, bottom: number): void {
@@ -142,7 +136,7 @@ export class Toolbar extends ToolbarBase {
     }
 
     const {y} = parent.getLocationOnScreen();
-    this.startPositionY = screen.mainScreen.heightDIPs - y - ((this.showWhenKeyboardHidden === true ? newHeight : 0) / screen.mainScreen.scale);
+    this.startPositionY = Screen.mainScreen.heightDIPs - y - ((this.showWhenKeyboardHidden === true ? newHeight : 0) / Screen.mainScreen.scale);
     this.log("_layout, startPositionY: " + this.startPositionY);
 
     if (this.lastHeight === undefined) {
